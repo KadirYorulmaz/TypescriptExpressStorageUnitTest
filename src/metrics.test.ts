@@ -11,7 +11,12 @@ var dbMet: MetricsHandler
 
 describe('Metrics', function () {
   before(function () {
-    LevelDB.clear(dbPath)
+      try{
+        LevelDB.clear(dbPath)
+      }catch(err){
+        
+      }
+    
     dbMet = new MetricsHandler(dbPath)
   })
 
