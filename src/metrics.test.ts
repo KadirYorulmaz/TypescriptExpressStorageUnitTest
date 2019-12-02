@@ -31,7 +31,7 @@ describe('Metrics', function () {
   })
 
   describe('#post', function () {
-    it('should save an new array in group', function () {
+    it('should save a new array in group', function () {
 
         var met: Metric[] = []
         met.push(new Metric('1235461', 12))
