@@ -3,18 +3,8 @@ import { Metric, MetricsHandler } from './metrics'
 import { LevelDB } from "./leveldb"
 
 
-const a: number = 0
-
-describe('Metrics', function () {
-  it('should save and get', function () {
-    expect(a).to.equal(0)
-  })
-})
-
-
-
-
-const dbPath: string = 'db_test'
+// const dbPath: string = 'db_test'
+const dbPath: string = 'db/test'
 var dbMet: MetricsHandler
 
 
@@ -28,14 +18,57 @@ describe('Metrics', function () {
   after(function () {
     dbMet.db.close()
   })
-})
-
-describe('#get', function () {
+  describe('#get', function () {
     it('should get empty array on non existing group', function () {
-      dbMet.getById("0", function (err: Error | null, result?: Metric[]) {
-        expect(err).to.be.null
-        expect(result).to.not.be.undefined
+      dbMet.getAll(function (err: Error | null, result?: Metric[]) {
+        //   console.log();
+        // expect(err).to.be.null
+        // expect(result).to.not.be.undefined
         expect(result).to.be.empty
+        // expect(result).to.be.true
       })
     })
   })
+
+  describe('#get', function () {
+    it('should get empty array on non existing group', function () {
+
+        var met: Metric[] = []
+        met.push(new Metric('1235461', 12))
+
+        dbMet.save('1', met, (err: Error | null, result?: Metric[]) => {
+        // expect(err).to.be.null
+                // expect(result).to.not.be.undefined
+                expect(result).to.be.empty
+                // expect(result).to.be.true
+
+                dbMet.getById(12,function (err: Error | null, result?: Metric[]) {
+                    //   console.log();
+                    // expect(err).to.be.null
+                    // expect(result).to.not.be.undefined
+                    // expect(result).to.be.empty
+                    // expect(result).to.be.true
+                    
+                    if(result)
+                    expect(result[0].value).to.equal(12)
+                })
+        })
+    })
+  })
+
+
+
+
+
+
+})
+
+
+
+
+
+// '#save' should save data
+
+// '#save' should update existing data
+// '#delete' should delete data
+// '#delete' should not fail if data does not exist

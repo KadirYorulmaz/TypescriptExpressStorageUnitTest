@@ -30,7 +30,7 @@ export class MetricsHandler {
     this.db = LevelDB.open(dbPath)
   }
 
-  public save(key: number, metrics: Metric[], callback: (error: Error | null) => void) {
+  public save(key: any, metrics: Metric[], callback: (error: Error | null) => void) {
     console.log('key: ',key);
     // console.log('Metrics: ',metrics);
     const stream = WriteStream(this.db)
@@ -40,6 +40,7 @@ export class MetricsHandler {
       stream.write({ key: `metric:${key}:${m.timestamp}`, value: m.value })
     })
     stream.end()
+    
   }
 
 
@@ -55,6 +56,7 @@ export class MetricsHandler {
         let metric: Metric = new Metric(timestamp, data.value);
         // let metric: Metric = new Metric(data.key, data.value);
         metrics.push(metric)
+        console.log(metrics);
         // metrics.push(data)
       })
       .on('error', function (err) {
@@ -89,7 +91,7 @@ export class MetricsHandler {
           metrics.push(metric)
           // metrics.push(data)
         }
-      })
+      })  
       .on('error', function (err) {
         callback(err, null);
         console.log('Oh my!', err)
