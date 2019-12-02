@@ -24,13 +24,13 @@ describe('Metrics', function () {
     dbMet.db.close()
   })
   describe('#get', function () {
-    it('should get empty array on non existing group', function (next) {
+    it('should get empty array on non existing group', function () {
       dbMet.getAll(function (err: Error | null, result?: Metric[]) {
         //   console.log();
         // expect(err).to.be.null
         // expect(result).to.not.be.undefined
         expect(result).to.be.empty
-        next()
+        
         // expect(result).to.be.true
       })
     })
