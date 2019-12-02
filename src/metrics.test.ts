@@ -35,31 +35,31 @@ describe('Metrics', function () {
     })
   })
 
-  describe('#post', function () {
-    it('should save a new array in group', function () {
+//   describe('#post', function () {
+//     it('should save a new array in group', function () {
 
-        var met: Metric[] = []
-        met.push(new Metric('1235461', 12))
+//         var met: Metric[] = []
+//         met.push(new Metric('1235461', 12))
 
-        dbMet.save('1', met, (err: Error | null, result?: Metric[]) => {
-        // expect(err).to.be.null
-                // expect(result).to.not.be.undefined
-                // expect(result).to.be.empty
-                // expect(result).to.be.true
+//         dbMet.save('1', met, (err: Error | null, result?: Metric[]) => {
+//         // expect(err).to.be.null
+//                 // expect(result).to.not.be.undefined
+//                 // expect(result).to.be.empty
+//                 // expect(result).to.be.true
 
-                dbMet.getById(12,function (err: Error | null, result?: Metric[]) {
-                    //   console.log();
-                    // expect(err).to.be.null
-                    // expect(result).to.not.be.undefined
-                    // expect(result).to.be.empty
-                    // expect(result).to.be.true
+//                 dbMet.getById(12,function (err: Error | null, result?: Metric[]) {
+//                     //   console.log();
+//                     // expect(err).to.be.null
+//                     // expect(result).to.not.be.undefined
+//                     // expect(result).to.be.empty
+//                     // expect(result).to.be.true
 
-                    if(result)
-                    expect(result[0].value).to.equal(12)
-                })
-        })
-    })
-  })
+//                     if(result)
+//                     expect(result[0].value).to.equal(12)
+//                 })
+//         })
+//     })
+//   })
 
 
 
