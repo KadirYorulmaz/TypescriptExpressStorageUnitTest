@@ -2,7 +2,6 @@ import express = require('express')
 const app = express()
 import bodyparser = require('body-parser'); 
 
-
 let ejs = require('ejs');
 import path = require('path');
 app.use(express.static(path.join(__dirname, '/public')))
@@ -55,20 +54,7 @@ const port: string = process.env.PORT || '8080'
   })
 
   app.delete('/metrics/:id', (req: any, res: any) => {
-    // let receivedMetric;
-   
-  //  async () =>{
-  //   await dbMet.getById(req.params.id, (err: Error | null, result: any) =>{
-  //     console.log("Hello1");
-  //     receivedMetric = result;
-  //     console.log("Hello2");
-  //     console.log(receivedMetric);
-  //     console.log("Hello3");
-     
-  //   })
-  //  }
-   
-
+ 
     dbMet.deleteById(req.params.id, (err: Error | null, result: any) => {
       if (err) throw err
       console.log(result);
@@ -77,22 +63,9 @@ const port: string = process.env.PORT || '8080'
 
   })
 
-  // app.get('/metrics/:id', (req: any, res: any) => {
-  //   dbMet.getAll((err: Error | null, result: any) => {
-  //     if (err) throw err
-  //     res.status(200).send()
-  //   })
-  // })
-
   app.get('/hello/:name', (req, res) => 
     res.render('hello.ejs', {name: req.params.name})
   )
-
-
-  // app.get('/', (req: any, res: any) => {
-//   res.write('Hello world')
-//   res.end()
-// })
 
 app.listen(port, (err: Error) => {
   if (err) {
