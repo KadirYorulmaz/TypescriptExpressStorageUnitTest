@@ -1,13 +1,12 @@
 import express = require('express')
-const app = express()
 import bodyparser = require('body-parser'); 
+import path = require('path');
+import {MetricsHandler} from './metrics';
+const app = express()
 
 let ejs = require('ejs');
-import path = require('path');
 app.use(express.static(path.join(__dirname, '/public')))
 // import metrics = require('./metrics.js');
-import {MetricsHandler} from './metrics';
-
 app.set('views', __dirname + "/views")
 app.set('view engine', 'ejs');
 app.use(bodyparser.json())
@@ -15,6 +14,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 
 const port: string = process.env.PORT || '8080'
+const dbMet: MetricsHandler = new MetricsHandler('./db/metrics')
 
 // app.get('/metrics.json', (req, res) => {
   
@@ -24,7 +24,6 @@ const port: string = process.env.PORT || '8080'
     // });
   // })
 
-  const dbMet: MetricsHandler = new MetricsHandler('./db/metrics')
 
   app.post('/metrics/:id', (req: any, res: any) => {
     // console.log('hello', req);
@@ -67,6 +66,10 @@ const port: string = process.env.PORT || '8080'
     res.render('hello.ejs', {name: req.params.name})
   )
 
+  app.get('/hello', (req, res) => 
+  res.render('hello.ejs', {name: req.params.name})
+)
+
 app.listen(port, (err: Error) => {
   if (err) {
     throw err
@@ -97,6 +100,7 @@ app.use(session({
 }))
 
 import { UserHandler, User } from './user'
+import { ok } from 'assert';
 const dbUser: UserHandler = new UserHandler('./db/users')
 const authRouter = express.Router()
 
@@ -116,23 +120,57 @@ authRouter.get('/logout', (req: any, res: any) => {
 
 
 app.post('/login', (req: any, res: any, next: any) => {
-  dbUser.get(req.body.username, (err: Error | null, result?: User) => {
-    if (err) next(err)
-    if (result === undefined || !result.validatePassword(req.body.password)) {
-      res.redirect('/login')
+  console.log(req.body.username);
+  console.log(req.body.password);
+
+  dbUser.getAll((err: Error | null, result?: User)=>{
+    console.log(result);
+  })
+
+  // return res.status(200).send(req.body);
+
+  // dbUser.get(req.body.username, (err: Error | null, result?: User) => {
+  //   if (err) next(err)
+  //   if (result === undefined || !result.validatePassword(req.body.password)) {
+  //     res.redirect('/login')
+  //   } else {
+  //     req.session.loggedIn = true
+  //     req.session.user = result
+  //     res.redirect('/')
+  //   }
+  // })
+})
+
+app.post('/saveUser', (req: any, res: any, next: any) => {
+  console.log("body: ", req.body);
+
+  // return res.status(200).send(ok);
+  dbUser.get(req.body.username, function (err: Error | null, result?: User) {
+    console.log('SaveUser: if err', err);
+    console.log('SaveUser: if result', result);
+    if (!err || result !== undefined) {
+     res.status(409).send("user already exists")
     } else {
-      req.session.loggedIn = true
-      req.session.user = result
-      res.redirect('/')
+      console.log('SaveUser: else',req.body)
+      dbUser.save(req.body, function (err: Error | null) {
+
+if (err) next(err)
+
+else res.status(201).send("user persisted")
+      })
     }
   })
 })
+
 
 app.use(authRouter)
 
 const userRouter = express.Router()
 
 userRouter.post('/', (req: any, res: any, next: any) => {
+  // console.log("body: ", req.body);
+
+  // return res.status(200).send(ok);
   dbUser.get(req.body.username, function (err: Error | null, result?: User) {
     if (!err || result !== undefined) {
      res.status(409).send("user already exists")
@@ -155,8 +193,7 @@ userRouter.get('/:username', (req: any, res: any, next: any) => {
   })
 })
 
-// app.use('/user', userRouter)
-// })
+app.use('/user', userRouter)
 
 
 const authCheck = function (req: any, res: any, next: any) {

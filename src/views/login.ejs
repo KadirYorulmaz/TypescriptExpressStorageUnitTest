@@ -1,7 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partials/head %>
+</head>
+
+<body class="container">
+
 <div id="form">
     <p>Please login to your account</p>
     <hr/>
-    <form action="/login" method="post">
+    <!-- <form action="/login" method="post"> -->
       <div class="form-group">
         <label for="form_username">Username</label>
         <input id="form_username" type="text" name="username" />
@@ -10,16 +19,50 @@
         <label for="form_password">Password</label>
         <input id="form_password" type="password" name="password" />
       </div>
-      <button class="btn btn-primary btn-block" type="submit" value="Submit">Connect</button>
-    </form>
+      <!-- <button class="btn btn-primary btn-block" id="connect" type="submit" value="Submit">Connect</button> -->
+      <button class="btn btn-primary btn-block" id="connect">Connect</button>
+    <!-- </form> -->
     <hr/>
     <button class="btn btn-success btn-block" type="submit" href="/signup" onClick='document.location.href="/signup"'>
       Create an account
     </button>
   </div>
 
+</body>
+
+</html>
+
+  <script>
+    $('#connect').click((e) => {
+        let data = {};
+        data.username = $('#form_username').val();
+        data.password = $('#form_password').val();
+        console.log(data);
+
+      //$.post("/login", JSON.stringify(data) , function(data, status){
+      //  console.log("Data: " + data + "\nStatus: " + status);
+      //});
 
 
-  
+        $.ajax({
+          type: "POST",
+          url: "/login",
+          // The key needs to match your method's input parameter (case-sensitive).
+          data: JSON.stringify(data),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(data){
+            console.log(data);
+          },
+          failure: function(errMsg) {
+              alert(errMsg);
+          }
+      });
+
+
+    })   
+</script>
+
 <!-- <script src="/js/jquery-3.4.1.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script> -->

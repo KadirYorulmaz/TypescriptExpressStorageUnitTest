@@ -1,5 +1,5 @@
-2019/12/07-21:31:29.078 774 Recovering log #6
-2019/12/07-21:31:29.079 774 Level-0 table #8: started
-2019/12/07-21:31:29.088 774 Level-0 table #8: 352 bytes OK
-2019/12/07-21:31:29.094 774 Delete type=0 #6
-2019/12/07-21:31:29.094 774 Delete type=3 #4
+2019/12/10-01:13:07.707 5fd4 Recovering log #162
+2019/12/10-01:13:07.707 5fd4 Level-0 table #164: started
+2019/12/10-01:13:07.722 5fd4 Level-0 table #164: 187 bytes OK
+2019/12/10-01:13:07.729 5fd4 Delete type=0 #162
+2019/12/10-01:13:07.729 5fd4 Delete type=3 #160
