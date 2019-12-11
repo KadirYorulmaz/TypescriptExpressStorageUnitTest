@@ -141,7 +141,8 @@ app.post('/login', (req: any, res: any, next: any) => {
   // })
 })
 
-app.post('/saveUser', (req: any, res: any, next: any) => {
+
+app.post('/signup', (req: any, res: any, next: any) => {
   console.log("body: ", req.body);
 
   // return res.status(200).send(ok);
@@ -152,7 +153,9 @@ app.post('/saveUser', (req: any, res: any, next: any) => {
      res.status(409).send("user already exists")
     } else {
       console.log('SaveUser: else',req.body)
-      dbUser.save(req.body, function (err: Error | null) {
+      let user = new User(req.body.username, req.body.email, req.body.password, false);
+
+      dbUser.save(user, function (err: Error | null) {
 
 if (err) next(err)
 

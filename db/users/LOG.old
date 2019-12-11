@@ -1,6 +1,6 @@
-2019/12/10-01:12:32.023 508 Recovering log #102
-2019/12/10-01:12:32.024 508 Level-0 table #104: started
-2019/12/10-01:12:32.030 508 Level-0 table #104: 204 bytes OK
-2019/12/10-01:12:32.034 508 Delete type=0 #102
-2019/12/10-01:12:32.034 508 Delete type=3 #101
-2019/12/10-01:12:32.036 30c4 Moved #104 to level-1 204 bytes OK: files[ 3 1 0 0 0 0 0 ]
+2019/12/11-18:35:30.340 5d3c Recovering log #32
+2019/12/11-18:35:30.341 5d3c Level-0 table #34: started
+2019/12/11-18:35:30.379 5d3c Level-0 table #34: 247 bytes OK
+2019/12/11-18:35:30.396 5d3c Delete type=0 #32
+2019/12/11-18:35:30.398 5d3c Delete type=3 #30
+2019/12/11-18:35:30.401 3350 Moved #34 to level-1 247 bytes OK: files[ 3 3 0 0 0 0 0 ]

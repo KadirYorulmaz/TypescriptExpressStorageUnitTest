@@ -8,7 +8,8 @@
     "forceConsistentCasingInFileNames": true,  /* Disallow inconsistently-cased references to the same file. */
     "outDir": "./dist",
     "moduleResolution": "node",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "sourceMap": true  // For debugging 
   },
   "include": [
     "src/**/*"
@@ -18,7 +19,3 @@
     "**/*.spec.ts"
   ]
 }
-
-
-
-
