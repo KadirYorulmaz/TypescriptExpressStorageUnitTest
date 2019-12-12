@@ -14,8 +14,21 @@ Paste below link to the browser will give you the ability to acces the website
 
 http://localhost:8080/hello/:kadir
 
-
-
-
-
 # Made by Abdul Kadir Yorulmaz & Adit Gupta
+
+
+signup 
+-when signup redirect to login
+
+login
+- when login redirect to index
+
+signout
+
+ 
+display metrics in a graph
+update / delete a metric             
+
+Functional unit tests  
+
+Create default users in forhand

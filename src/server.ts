@@ -1,4 +1,4 @@
-import express = require('express')
+import express = require('express');
 import bodyparser = require('body-parser'); 
 import path = require('path');
 import {MetricsHandler} from './metrics';
@@ -23,7 +23,6 @@ const dbMet: MetricsHandler = new MetricsHandler('./db/metrics')
     //     res.status(200).json(data)
     // });
   // })
-
 
   app.post('/metrics/:id', (req: any, res: any) => {
     // console.log('hello', req);
@@ -120,46 +119,33 @@ authRouter.get('/logout', (req: any, res: any) => {
 
 
 app.post('/login', (req: any, res: any, next: any) => {
-  console.log(req.body.username);
-  console.log(req.body.password);
-
-  dbUser.getAll((err: Error | null, result?: User)=>{
-    console.log(result);
-  })
-
-  // return res.status(200).send(req.body);
-
-  // dbUser.get(req.body.username, (err: Error | null, result?: User) => {
-  //   if (err) next(err)
-  //   if (result === undefined || !result.validatePassword(req.body.password)) {
-  //     res.redirect('/login')
-  //   } else {
-  //     req.session.loggedIn = true
-  //     req.session.user = result
-  //     res.redirect('/')
-  //   }
+  // dbUser.getAll((err: Error | null, result?: User)=>{
+  //   console.log(result);
+  //   return res.status(200).send(result);
   // })
+  dbUser.get(req.body.username, (err: Error | null, result?: User) => {
+    if (err) next(err)
+    if (result === undefined || !result.validatePassword(req.body.password)) {
+      res.redirect('/login')
+    } else {
+      req.session.loggedIn = true
+      req.session.user = result
+      res.redirect('/');
+    }
+  })
 })
 
 
 app.post('/signup', (req: any, res: any, next: any) => {
-  console.log("body: ", req.body);
-
-  // return res.status(200).send(ok);
   dbUser.get(req.body.username, function (err: Error | null, result?: User) {
-    console.log('SaveUser: if err', err);
-    console.log('SaveUser: if result', result);
     if (!err || result !== undefined) {
      res.status(409).send("user already exists")
     } else {
-      console.log('SaveUser: else',req.body)
       let user = new User(req.body.username, req.body.email, req.body.password, false);
 
       dbUser.save(user, function (err: Error | null) {
-
-if (err) next(err)
-
-else res.status(201).send("user persisted")
+          if (err) next(err)
+          else res.status(201).send("user persisted")
       })
     }
   })
@@ -171,13 +157,11 @@ app.use(authRouter)
 const userRouter = express.Router()
 
 userRouter.post('/', (req: any, res: any, next: any) => {
-  // console.log("body: ", req.body);
-
-  // return res.status(200).send(ok);
   dbUser.get(req.body.username, function (err: Error | null, result?: User) {
     if (!err || result !== undefined) {
      res.status(409).send("user already exists")
     } else {
+      let user = new User(req.body.username, req.body.email, req.body.password, false);
       dbUser.save(req.body, function (err: Error | null) {
 
 if (err) next(err)

@@ -10,7 +10,7 @@
 <div id="form">
     <p>Please login to your account</p>
     <hr/>
-    <!-- <form action="/login" method="post"> -->
+    <form action="/login" method="post">
       <div class="form-group">
         <label for="form_username">Username</label>
         <input id="form_username" type="text" name="username" />
@@ -21,7 +21,7 @@
       </div>
       <!-- <button class="btn btn-primary btn-block" id="connect" type="submit" value="Submit">Connect</button> -->
       <button class="btn btn-primary btn-block" id="connect">Connect</button>
-    <!-- </form> -->
+    </form>
     <hr/>
     <button class="btn btn-success btn-block" type="submit" href="/signup" onClick='document.location.href="/signup"'>
       Create an account
@@ -33,7 +33,7 @@
 </html>
 
   <script>
-    $('#connect').click((e) => {
+ /*   $('#connect').click((e) => {
         let data = {};
         data.username = $('#form_username').val();
         data.password = $('#form_password').val();
@@ -53,6 +53,7 @@
           dataType: "json",
           success: function(data){
             console.log(data);
+
           },
           failure: function(errMsg) {
               alert(errMsg);
@@ -60,7 +61,7 @@
       });
 
 
-    })   
+    })   */
 </script>
 
 <!-- <script src="/js/jquery-3.4.1.min.js"></script> -->

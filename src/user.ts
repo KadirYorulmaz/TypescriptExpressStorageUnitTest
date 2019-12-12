@@ -15,22 +15,19 @@ export class User {
        
         if (!passwordHashed) {
             this.setPassword(password)
-            console.log('###############################');
         } else this.password = password
-        console.log("I wanna know: ", this.getPassword());
     }
 
     static fromDb(username: string, value: any): User {
-        console.log(username);
-        console.log(value);
         const [password, email] = value.split(":")
-        return new User(username, email, password)
+        console.log([password, email]);
+        return new User(username, email, password, true)
     }
 
     public setPassword(toSet: string): void {
-        console.log('toSet', toSet);
+          console.log('toSet', toSet);
           this.password = passwordHash.generate(toSet);
-          console.log(this.password);
+          console.log('Generated password: ', this.password);
     }
 
     public getPassword(): string {
@@ -39,7 +36,9 @@ export class User {
 
     public validatePassword(toValidate: String): boolean {
         // return comparison with hashed password
-        return passwordHash.verify(toValidate, this.password)
+        let validate = passwordHash.verify(toValidate, this.password);
+        console.log('validate: ', validate, toValidate, this.password);
+        return validate
     }
 }
 
@@ -48,7 +47,6 @@ export class UserHandler {
     public db: any
 
     public get(username: string, callback: (err: Error | null, result?: User) => void) {
-        console.log("Users:", username);
         this.db.get(`user:${username}`, function (err: Error, data: any) {
             console.log('data*************', data);
             if (err) callback(err)
@@ -58,10 +56,6 @@ export class UserHandler {
     }
 
     public save(user: User, callback: (err: Error | null) => void) {
-    
-        console.log('user', user);
-        console.log('Password',user.getPassword())
-        // this.db.put(`user:${user.username}`, `${user.getPassword}:${user.email}`, (err: Error | null) => {
         this.db.put(`user:${user.username}`, `${user.getPassword()}:${user.email}`, (err: Error | null) => {
             callback(err)
         })
@@ -78,15 +72,7 @@ export class UserHandler {
     
         this.db.createReadStream()
           .on('data', function (data) {
-            // console.log(data.key, '=', data.value)
-            // callback(null, data);
             console.log(data);
-            // let timestamp: string = data.key.split(':')[1]
-            // let metric: Metric = new Metric(timestamp, data.value);
-            // let metric: Metric = new Metric(data.key, data.value);
-            // metrics.push(metric)
-            // console.log(metrics);
-            // metrics.push(data)
           })
           .on('error', function (err) {
             callback(err, null);
