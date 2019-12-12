@@ -155,6 +155,7 @@ app.post('/signup', (req: any, res: any, next: any) => {
 app.use(authRouter)
 
 const userRouter = express.Router()
+app.use('/user', userRouter)
 
 userRouter.post('/', (req: any, res: any, next: any) => {
   dbUser.get(req.body.username, function (err: Error | null, result?: User) {
@@ -176,11 +177,12 @@ userRouter.get('/:username', (req: any, res: any, next: any) => {
   dbUser.get(req.params.username, function (err: Error | null, result?: User) {
     if (err || result === undefined) {
       res.status(404).send("user not found")
+    // } else res.status(200).json(result)
     } else res.status(200).json(result)
   })
 })
 
-app.use('/user', userRouter)
+
 
 
 const authCheck = function (req: any, res: any, next: any) {

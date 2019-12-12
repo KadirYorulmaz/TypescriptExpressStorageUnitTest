@@ -4,9 +4,7 @@
 <head>
     <% include partials/head %>
 </head>
-<button class="btn btn-danger" href="/logout" onClick='document.location.href="/logout"'>
-    Logout
-  </button>
+
 
 
 <body class="container">
@@ -18,14 +16,76 @@
           }
     </style>
 
+      <div class="row">
+        <div class="col-10"> <!--Col Val -->
+          <div class="row">
+            <div class="col-4">
+              <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">User Info</a>
+                <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Edit User</a>
+                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Delete User</a>
+                <a class="list-group-item list-group-item-action" id="list-show-metrics-list" data-toggle="list" href="#list-show-metrics" role="tab" aria-controls="ShowMetrics">Show Metrics</a>
+                <a class="list-group-item list-group-item-action" id="list-create-metrics-list" data-toggle="list" href="#list-create-metrics" role="tab" aria-controls="CreateMetrics">Create Metrics</a>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                  <h3>User Info</h3>
+                
+                </div>
+                <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                  <h3>User Edit</h3>
+      
+                </div>
+                <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+                  <h3>Delete User</h3>
+                </div>
+                <div class="tab-pane fade" id="list-show-metrics" role="tabpanel" aria-labelledby="list-show-metrics-list">
+                  <h3>Show My metrics</h3>
 
-    <div class="col-md-6 col-md-offset-3">
-        <h1>Hello <%= name %></h1>
-        <button class="btn btn-success" id="show-metrics">
-            Bring the metrics
-        </button>
-        <div id="metrics"></div>
-    </div>
+                      <div class="col-md-6 col-md-offset-3">
+                        <h1>Hello <%= name %></h1>
+                        <button class="btn btn-success" id="show-metrics">
+                            Bring the metrics
+                        </button>
+                        <div id="metrics"></div>
+                        <div id="username"></div>
+                        <div id="email"></div>
+                        <div id="password"></div>
+                    </div>
+      
+                </div>
+                <div class="tab-pane fade" id="list-create-metrics" role="tabpanel" aria-labelledby="list-create-metrics-list">
+                  <h3>Create metrics</h3>
+
+                      <div class="col-md-6 col-md-offset-3">
+                        
+                        <button class="btn btn-success" id="show-metrics">
+                            Bring the metrics
+                        </button>
+                        
+                        <div id="metrics"></div>
+                    </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-2">  <!--Col Val -->
+          <button class="btn btn-danger" href="/logout" onClick='document.location.href="/logout"'>
+            Logout
+          </button>
+        </div>
+      </div>
+    
+
+   
+
+
+
 
 
 
@@ -37,7 +97,7 @@
 
 </html>
 <script>
-    $('#show-metrics').click((e) => {
+  /*  $('#show-metrics').click((e) => {
         e.preventDefault();
         $.getJSON("/metrics.json", {}, (data) => {
             const content = data.map(d => {
@@ -45,7 +105,18 @@
             })
             $('#metrics').append(content.join("\n"));
         });
-    })   
+    })   */
+  
+    $('#show-metrics').click((e) => {
+      e.preventDefault();
+      $.getJSON("user/kad", {}, (data) => {
+          console.log(data.username);
+          $('username').val(data.username);
+          $('email').val(data.email); 
+          $('password').val(data.password);
+      });
+  }) 
+    
 </script>
 
 <!-- <script src="/js/jquery-3.4.1.min.js"></script> -->
