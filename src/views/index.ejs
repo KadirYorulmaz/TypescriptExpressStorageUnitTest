@@ -58,33 +58,46 @@
           <div class="tab-pane fade" id="list-show-metrics" role="tabpanel" aria-labelledby="list-show-metrics-list">
             <h3>Show My metrics</h3>
 
+            <table class="table" id="my-table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Timestamp</th>
+                  <th scope="col">Value</th>
+                  <th scope="col">Remove</th>
+                </tr>
+              <tbody>
+
+                <% metrics.forEach(function(user){ %>
+                <tr>
+                  <th scope="row"></th>  </th>
+                  <td> <%= user.timestamp%> </td>
+                  <td> <%= user.value%> </td>
+                  <td>
+                      <button  type="button" class="btn btn-danger" id="delete-metric-value"><i class="fa fa-trash-o" aria-hidden="true"></i></i></button>
+                  </td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+
             <div class="col-md-6 col-md-offset-3">
 
               <button class="btn btn-success" id="show-metrics">
                 Bring the metrics
               </button>
 
+
+
               <div id="chartdiv"></div>
 
 
-              <table class="table" id="my-table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Timestamp</th>
-                    <th scope="col">Value</th>
-                    <th scope="col">Delete</th>
-                  </tr>
-                </thead>
-                <tbody id="fill-data-table">
-                 
-                </tbody>
-              </table>
+            
 
             </div>
 
           </div>
-          <div class="tab-pane fade" id="list-create-metrics" role="tabpanel"
+          <div class=# fade" id="list-create-metrics" role="tabpanel"
             aria-labelledby="list-create-metrics-list">
             <h3>Create metrics</h3>
 
@@ -129,6 +142,13 @@
 </body>
 
 </html>
+
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<script src="//www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="//www.amcharts.com/lib/3/serial.js"></script>
+<script src="//www.amcharts.com/lib/3/themes/light.js"></script>
+
 <script>
   /*  $('#show-metrics').click((e) => {
         e.preventDefault();
@@ -160,25 +180,18 @@
   // --- Show all metric ---
   //  ----------------------- 
 
+function createChart(){
+  let tempData = [];
+  <% metrics.forEach(function(user){ %>
+      tempData.push({timestamp:  <%= user.timestamp%>, value:  <%= user.value%>})
+    <% }); %>
 
-
-  $('#show-metrics').click((e) => {
-    $.get("/metrics", function (data) {
-      console.log(data);
-      let timestampValueArr = [];
-      let timestampValueObj = {};
-
-      for (let i = 0; i < data.length; i++) {
-        // timestampValueObj.timestamp = data[i].timestamp;
-        // timestampValueObj.value = data[i].value;
-        timestampValueArr.push({ "timestamp": parseInt(data[i].timestamp), "value": parseInt(data[i].value) });
-        console.log(timestampValueArr);
-      }
-
+    console.log(tempData);
+    if(tempData){
       var chart = AmCharts.makeChart("chartdiv", {
         "type": "serial",
         "theme": "light",
-        "dataProvider": timestampValueArr,
+        "dataProvider": tempData,
         "graphs": [{
           "bullet": "round",
           "type": "smoothedLine",
@@ -190,40 +203,14 @@
           "minPeriod": "fff"
         }
       });
-
-      let countNumber = 0;
-      const content = data.map(d => {
-        return '<tr>' +
-          '<th scope="row">' + (countNumber++) + '</th>' +
-          '<td>' + d.timestamp + '</td>' +
-          '<td>' + d.value + '</td>' +
-          '<td>' +
-            '<button type="button" class="btn btn-danger" id="delete-metric-value'+ (countNumber++) +'">Remove</button>'+
-            '</td>' +
-          '</tr>';
-      })
-      $('#fill-data-table').append(content.join("\n"));
- //     '<button type="button" class="btn btn-danger" id="delete-metric-value'+ (countNumber++) +'">Remove</button>'+
-//      <button  type="button" class="btn btn-danger" id="delete-metric-value'+ (countNumber++) +'"><span class="glyphicon glyphicon-remove"></span> HEllo</button> </td>' +
-
-
-
-    });
-  })
-
-  $('#my-table').click((e) => {
+    }
     
-  })
 
-  $('#my-table').on('click','tr,td', function() {
-    console.log( $(this).text() );
-    //alert( $( this ).text() );
-  });
+}
+  // --- Runs the chart ---
+  //  ----------------------- 
+      createChart();
 
-  function deleteMetirc(username){
-    console.log(username);
-  }
- 
 
   // --- Creates new metric ---
   // -------------------------- 
@@ -260,7 +247,7 @@
 <!-- https://canvasjs.com/docs/charts/basics-of-creating-html5-chart/date-time-axis/ -->
 
 <script type="text/javascript">
-  window.onload = function () {
+ /* window.onload = function () {
     var chart = new CanvasJS.Chart("chartContainer",
       {
         title: {
@@ -326,10 +313,6 @@
 
 
 
-  }
+  }*/
 </script>
-<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-<script src="//www.amcharts.com/lib/3/amcharts.js"></script>
-<script src="//www.amcharts.com/lib/3/serial.js"></script>
-<script src="//www.amcharts.com/lib/3/themes/light.js"></script>
