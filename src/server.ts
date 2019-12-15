@@ -1,7 +1,7 @@
 import express = require('express');
 import bodyparser = require('body-parser'); 
 import path = require('path');
-import {MetricsHandler} from './metrics';
+import {MetricsHandler, Metric} from './metrics';
 const app = express()
 
 let ejs = require('ejs');
@@ -23,33 +23,33 @@ const dbMet: MetricsHandler = new MetricsHandler('./db/metrics')
     //     res.status(200).json(data)
     // });
   // })
+ 
 
-  app.post('/metrics/:id', (req: any, res: any) => {
-    // console.log('hello', req);
-    dbMet.save(req.params.id, req.body, (err: Error | null) => {
-      if (err) throw err
-      res.status(200).send('OK')
-    })
-  })
+  // app.post('/metrics/:id', authCheck, (req: any, res: any) => {
+  //   // console.log('hello', req);
+  //   console.log('req.body', req.body);
+  //   console.log(req.session);
+  //   console.log(req.session.username);
+  //   let metric = new Metric(req.body.timestamp, req.body.value,  req.session.username);
+  //   let metricArray = [] as any;
+  //   metricArray.push(metric)
+  //   dbMet.save(req.params.id, metricArray, (err: Error | null) => {
+  //   // dbMet.save(req.params.id, req.body, (err: Error | null) => {
+  //     if (err) throw err
+  //     res.status(200).send('OK')
+  //   })
+  // })
 
-  app.get('/metrics/:id', (req: any, res: any) => {
-    // console.log('hello', req);
-    dbMet.getById(req.params.id, (err: Error | null, result: any) => {
-      if (err) throw err
-      // console.log(result);
-      res.status(200).send(result)
-    })
-  })
+ 
+  // app.get('/metrics/', (req: any, res: any) => {
 
-  app.get('/metrics/', (req: any, res: any) => {
+  //   dbMet.getAll((err: Error | null, result: any) => {
+  //     if (err) throw err
+  //     console.log(result);
+  //     res.status(200).send(result)
+  //   })
 
-    dbMet.getAll((err: Error | null, result: any) => {
-      if (err) throw err
-      console.log(result);
-      res.status(200).send(result)
-    })
-
-  })
+  // })
 
   app.delete('/metrics/:id', (req: any, res: any) => {
  
@@ -130,7 +130,8 @@ app.post('/login', (req: any, res: any, next: any) => {
     } else {
       req.session.loggedIn = true
       req.session.user = result
-      res.redirect('/');
+      console.log('req.session.user' + req.session.user);
+      res.redirect('/')
     }
   })
 })
@@ -183,8 +184,6 @@ userRouter.get('/:username', (req: any, res: any, next: any) => {
 })
 
 
-
-
 const authCheck = function (req: any, res: any, next: any) {
   if (req.session.loggedIn) {
     next()
@@ -192,9 +191,41 @@ const authCheck = function (req: any, res: any, next: any) {
 }
 
 app.get('/', authCheck, (req: any, res: any) => {
-  res.render('index', { name: req.session.username })
+  res.render('index', { username: req.session.user.username, email: req.session.user.email })
 })
 
 
+app.post('/metrics/:id', authCheck, (req: any, res: any) => {
+  // console.log('hello', req);
+  console.log('req.body', req.body);
+  console.log(req.session);
+  console.log('req.session.user.username',req.session.user.username);
+  let metric = new Metric(req.session.user.username, req.body.timestamp, req.body.value);
+  let metricArray = [] as any;
+  metricArray.push(metric)
+  dbMet.save(req.params.id, metricArray, (err: Error | null) => {
+  // dbMet.save(req.params.id, req.body, (err: Error | null) => {
+    if (err) throw err
+    res.status(200).send('OK')
+  })
+})
+
+app.get('/metrics', authCheck, (req: any, res: any) => {
+  // console.log('hello', req);
+  dbMet.getByUsername(req.session.user.username , (err: Error | null, result: any) => {
+    if (err) throw err
+    // console.log(result);
+    res.status(200).send(result)
+  })
+})
+
+userRouter.get('/', authCheck, (req: any, res: any, next: any) => {
+  dbUser.get(req.session.user.username, function (err: Error | null, result?: User) {
+    if (err || result === undefined) {
+      res.status(404).send("user not found")
+    // } else res.status(200).json(result)
+    } else res.status(200).json(result)
+  })
+})
 
 // https://d3js.org/
