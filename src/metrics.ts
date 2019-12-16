@@ -2,6 +2,7 @@
 import WriteStream from 'level-ws'
 import { LevelDB } from './leveldb';
 import { read, ReadStream } from 'fs';
+import { ok } from 'assert';
 
 export class Metric {
   public username: string
@@ -44,9 +45,6 @@ export class MetricsHandler {
   public save(key: any, metrics: Metric[], callback: (error: Error | null) => void) {
     console.log('key: ',key);
     console.log('Metrics: ',metrics);
-    // const stream = WriteStream(this.db)
-    // stream.on('error', callback)
-    // stream.on('close', callback)
 
     metrics.forEach((m: Metric) => {
       this.db.put(`${m.username}:${m.timestamp}`, `${m.value}`, (err: Error | null) => {
@@ -57,7 +55,6 @@ export class MetricsHandler {
       // stream.write({ key: `metric:${key}:${m.timestamp}`, username: m.username, value: m.value })
     })
     // stream.end()
-    
   }
 
 
@@ -99,19 +96,14 @@ export class MetricsHandler {
 
     this.db.createReadStream()
       .on('data', function (data) {
-        console.log(username);
-        console.log(data);
-        console.log(data.value);
+
         if (data.key.split(':')[0] === username) {
           let username: string = data.key.split(':')[0];
           let timestamp: string = data.key.split(':')[1];
           let metric: Metric = new Metric(username, timestamp, data.value);
-          // let metric: Metric = new Metric(data.key, data.value);
-          console.log(metric);
-          console.log(data.key);
           metrics.push(metric)
-          // metrics.push(data)
-        }
+
+          }
       })  
       .on('error', function (err) {
         callback(err, null);
@@ -127,40 +119,12 @@ export class MetricsHandler {
   }
 
 
-  public deleteById(key: number, callback: (error: Error | null, result: any | null) => void) {
-        // console.log('m: ',metrics);
+  public deleteById(username: number, timestamp: any, value: any, callback: (error: Error | null, result: any | null) => void) {
+     
+    this.db.del(username+':'+timestamp, (err: Error | null) => {
+        callback(err, ok)
+      });
 
-      var ws = WriteStream(this.db)
-      // console.log(ws);
-      ws.on('error', function (err) {
-        console.log('Oh my!', err)
-      })
-      ws.on('close', function () {
-        console.log('Stream closed')
-      })
-      
-      ws.write({ type: 'del', key: 'Metric { timestamp: 1, value: 85 }'})
-
-      // key: `metric:${key}:${m.timestamp}`, value: m.value }
-
-      // ws.write({ type: 'del', key: ourKey })
-      // metrics.forEach((m: Metric) => {
-      //   console.log('m: ',metrics);
-      //   ws.write({ type: 'del', key: '10'})
-      
-      //   // stream.write({ key: `metric:${key}:${m.timestamp}`, value: m.value })
-      // })
-
-      
-      ws.on('end', function () {
-        console.log('Stream closed2')
-         callback(null, null);
-      })
-  
-
-      this.db.del('metrics', function(err){
-         console.log("Hello"); 
-      })
   }
 
 }

@@ -4,9 +4,6 @@
 <head>
   <% include partials/head %>
 </head>
-
-
-
 <body class="container">
 
   <style>
@@ -15,124 +12,193 @@
       height: 300px;
     }
   </style>
-  <h1>Hello <%= username %></h1>
 
 
+  <h1>Hello <%= username %> welcome to your page</h1>
 
   <div class="row">
-    <div class="col-10">
-      <!--Col Val -->
-      <div class="row">
-        <div class="col-4">
-          <div class="list-group" id="list-tab" role="tablist">
-            <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
-              href="#list-home" role="tab" aria-controls="home">User Info</a>
-            <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
-              href="#list-profile" role="tab" aria-controls="profile">Edit User</a>
-            <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
-              href="#list-messages" role="tab" aria-controls="messages">Delete User</a>
-            <a class="list-group-item list-group-item-action" id="list-show-metrics-list" data-toggle="list"
-              href="#list-show-metrics" role="tab" aria-controls="ShowMetrics">Show Metrics</a>
-            <a class="list-group-item list-group-item-action" id="list-create-metrics-list" data-toggle="list"
-              href="#list-create-metrics" role="tab" aria-controls="CreateMetrics">Create Metrics</a>
-          </div>
-        </div>
-        <div class="col-8">
-          <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-              <h3>User Info</h3>
-              <div><b>Username: </b><%= username%></div>
-              <div><b>Email: </b><%= email%></div>
-
-
-            </div>
-          </div>
-          <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-            <h3>User Edit</h3>
-
-
-          </div>
-          <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
-            <h3>Delete User</h3>
-          </div>
-          <div class="tab-pane fade" id="list-show-metrics" role="tabpanel" aria-labelledby="list-show-metrics-list">
-            <h3>Show My metrics</h3>
-
-            <table class="table" id="my-table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Timestamp</th>
-                  <th scope="col">Value</th>
-                  <th scope="col">Remove</th>
-                </tr>
-              <tbody>
-
-                <% metrics.forEach(function(user){ %>
-                <tr>
-                  <th scope="row"></th>  </th>
-                  <td> <%= user.timestamp%> </td>
-                  <td> <%= user.value%> </td>
-                  <td>
-                      <button  type="button" class="btn btn-danger" id="delete-metric-value"><i class="fa fa-trash-o" aria-hidden="true"></i></i></button>
-                  </td>
-                </tr>
-                <% }); %>
-              </tbody>
-            </table>
-
-            <div class="col-md-6 col-md-offset-3">
-
-              <button class="btn btn-success" id="show-metrics">
-                Bring the metrics
-              </button>
-
-
-
-              <div id="chartdiv"></div>
-
-
-            
-
-            </div>
-
-          </div>
-          <div class=# fade" id="list-create-metrics" role="tabpanel"
-            aria-labelledby="list-create-metrics-list">
-            <h3>Create metrics</h3>
-
-            <div class="col-md-6 col-md-offset-3">
-
-              <input type='date' id='date-value'>
-              <input type='number' id='metric-value'>
-              <button onClick='checkDateValue()'> Submit </button>
-
-              <div>Timestamp:- <span id='date-value-timestamp'></span></div>
-
-              <button class="btn btn-success" id="create-metrics">
-                Bring the metrics
-              </button>
-
-              <div id="metrics"></div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
+    <div class="col-10"></div>
   <div class="col-2">
     <!--Col Val -->
     <button class="btn btn-danger" href="/logout" onClick='document.location.href="/logout"'>
       Logout
     </button>
   </div>
+</div>
+
+  <div class="row">
+    <div class="col-12">
+      <!-- // --- Row Begin ---
+      //  -----------------------  -->
+      <div class="row">
+                <div class="col-4">
+                        <div class="list-group" id="list-tab" role="tablist">
+                          <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
+                            href="#list-home" role="tab" aria-controls="home">User Info</a>
+                          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                            href="#list-profile" role="tab" aria-controls="profile">Edit User</a>
+                          <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
+                            href="#list-messages" role="tab" aria-controls="messages">Delete User</a>
+                          <a class="list-group-item list-group-item-action" id="list-show-metrics-list" data-toggle="list"
+                            href="#list-show-metrics" role="tab" aria-controls="ShowMetrics">Show Metrics</a>
+                          <a class="list-group-item list-group-item-action" id="list-create-metrics-list" data-toggle="list"
+                            href="#list-create-metrics" role="tab" aria-controls="CreateMetrics">Create Metrics</a>
+                        </div>
+                </div>
+
+        <div class="col-8">
+          <div class="tab-content" id="nav-tabContent">
+
+             <!-- // --- UserInfo Tab Begin ---
+              //  -----------------------  -->
+            <!-- <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"> -->
+                <div class="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                  <h3>User Info</h3>
+                  <div><b>Username: </b><%= username%></div>
+                  <div><b>Email: </b><%= email%></div>
+                </div>
+                   <!-- // --- End Tab ---
+                    //  -----------------------  -->
+         
+              
+               <!-- // --- UserEdit Tab Begin ---
+              //  -----------------------  -->
+            <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                <h3>User Edit</h3>
+              </div>
+                 <!-- // --- End Tab ---
+                    //  -----------------------  -->
+
+               <!-- // --- UserDelete Tab Begin ---
+              //  -----------------------  -->
+              <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+                <h3>Delete User</h3>
+              </div>
+   <!-- // --- End Tab ---
+                    //  -----------------------  -->
+
+
+               <!-- // --- Metric show Tab Begin ---
+              //  -----------------------  -->
+                <div class="tab-pane fade" id="list-show-metrics" role="tabpanel" aria-labelledby="list-show-metrics-list">
+                  <h3>Show My metrics</h3>
+
+                  <div id="card-box" class="card">
+                    <div class="card-header">
+                      Edit metrics value 
+                    </div>
+                    <div class="card-body">
+
+                      
+                      <!-- <form method="POST" action="/metrics/edit/"> -->
+                        <div class="form-group">
+                          <label id="timestamp-to-edit">Timestamp: <span id="timestamp-span"> </span> </label>
+                          <input type="text" class="form-control" id="timestamp-to-edit-hidden">
+                        </div>
+                        <div class="form-group">
+                          <label for="value-to-edit">Value</label>
+                          <input type="text" class="form-control" id="value-to-edit">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                      <!-- </form> -->
+                    </div>
+                  </div>
+<!--                   
+                  Lav Ajax function
+                  tag fat i værdierne via submit via ID 
+                  efter Edit 
+                  Vis det på tidslinjen 
+                  Slet eksisterende input værdien -->
+                
+
+
+
+
+
+
+                  <table class="table" id="my-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Timestamp</th>
+                        <th scope="col">Value</th>
+                        <th scope="col">Remove</th>
+                        <th scope="col">Edit</th>
+                      </tr>
+                    <tbody>
+
+                      <% metrics.forEach(function(user){ %>
+                      <tr>
+                        <!-- <form method="delete" action="/metrics/delete/<%= user.timestamp%>"> -->
+                            <th scope="row"></th>  </th>
+                            <td> <%= user.timestamp%> </td>
+                            <td>  <span class="value-text"><%= user.value%></span> </td>
+                            <td>
+                              <!-- <input  value="<%= user.timestamp%>"> -->
+                              <!-- <input type="" id="form_timestamp" type="number" name="timestamp" /> -->
+                              <!-- <a href="/metrics/<%= user.timestamp%>"><i class="fa fa-trash-o" aria-hidden="true"></i></a> -->
+                                <button  type="button" class="btn btn-danger" id="delete-metric-value" onclick="deleteMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                            </td>
+                            <td>
+                              <!-- <button  type="button" class="btn btn-warning" class="edit-metric-value-edit-btn" onclick="editMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-edit" aria-hidden="true"></i></button> -->
+                              <button  type="button" class="btn btn-warning edit-metric-value-edit-btn" onclick="editMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                              <!-- <button type="button" class="btn btn-success edit-metric-value-success-btn"> Success</button> -->
+                            </td> 
+                        <!-- </form> -->
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                 
+                
+                    <button class="btn btn-success" id="show-metrics">
+                      Bring the metrics
+                    </button>
+
+
+
+                    <div id="chartdiv"></div>
+                </div>
+          <!-- // --- End Tab ---
+                    //  -----------------------  -->
+
+
+
+                     <!-- // --- CreateMetrics Tab Begin ---
+                    //  -----------------------  -->
+                    <div class="tab-pane fade" id="list-create-metrics" role="tabpanel" aria-labelledby="list-create-metrics-list">
+                        <h3>Create metrics</h3>
+
+                      <div class="col-md-6 col-md-offset-3">
+
+                        <input type='date' id='date-value'>
+                        <input type='number' id='metric-value'>
+                        <button onClick='checkDateValue()'> Submit </button>
+
+                        <div>Timestamp:- <span id='date-value-timestamp'></span></div>
+
+                        <button class="btn btn-success" id="create-metrics">
+                          Bring the metrics
+                        </button>
+
+                        <div id="metrics"></div>
+                      </div>
+                        <!-- // --- End Tab ---
+                    //  -----------------------  -->
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
   </div>
 
 
 
-
+  
 
 
   <div id="chartContainer" style="height: 300px; width: 100%;"></div>
@@ -171,6 +237,83 @@
       });
   }) */
 
+  // $(".edit-metric-value-success-btn").hide();
+    //$(".value-input").hide();
+
+ /* $(".edit-metric-value-edit-btn").click(function(){
+    $(".edit-metric-value-success-btn").show();
+    $(".value-input").show();
+    $(".value-text").hide();
+  });
+*/
+  
+ /* $(".edit-metric-value-edit-btn").click(function() {
+    console.log("Hello");
+    $(this).hide()   
+    $(this).siblings(".edit-metric-value-success-btn").show();
+});
+  
+
+$(".edit-metric-value-success-btn").click(function() {
+  console.log("Hello");
+  $(this).hide()   
+  $(this).siblings(".edit-metric-value-edit-btn").show();
+});
+  
+*/
+
+
+    // --- send to edit Metric ---
+  //  ----------------------- 
+
+
+  $("#card-box").hide();
+function editMetric(timestamp, value){
+ $("#timestamp-span").text(timestamp);
+ $("#value-to-edit").val(value);
+ $("#card-box").show();
+}
+
+
+
+
+
+
+
+
+
+
+    // --- Delete Metric ---
+  //  ----------------------- 
+  function deleteMetric(timestamp, value){
+    console.log(timestamp, value);
+
+    $.ajax({
+      type: "DELETE",
+      url: "/metrics/"+timestamp+"/"+value,
+      success: function (data) {
+        console.log(data);
+
+      },
+      failure: function (errMsg) {
+        alert(errMsg);
+      }
+    })
+  }
+
+    // --- Get Metircs ---
+  //  ----------------------- 
+  $('#show-metrics').click((e) => {
+      e.preventDefault();
+      $.getJSON("/metrics", {}, (data) => {
+          console.log(data);
+       
+      });
+  }) 
+
+
+   // --- Temp test timestamp ---
+  //  ----------------------- 
   function checkDateValue() {
     var dateConvertedToTimestamp = (+new Date(document.getElementById('date-value').value));
 
@@ -204,7 +347,6 @@ function createChart(){
         }
       });
     }
-    
 
 }
   // --- Runs the chart ---
@@ -213,8 +355,7 @@ function createChart(){
 
 
   // --- Creates new metric ---
-  // -------------------------- 
-
+  // --------------------------   
   $('#create-metrics').click((e) => {
     console.log("Hello");
     let data = {};
@@ -224,7 +365,7 @@ function createChart(){
     console.log(data);
     $.ajax({
       type: "POST",
-      url: "/metrics/2",
+      url: "/metrics",
       // The key needs to match your method's input parameter (case-sensitive).
       data: JSON.stringify(data),
       contentType: "application/json; charset=utf-8",
@@ -313,6 +454,12 @@ function createChart(){
 
 
 
-  }*/
+  /*}*/
 </script>
 
+
+
+<script>
+  
+
+</script>

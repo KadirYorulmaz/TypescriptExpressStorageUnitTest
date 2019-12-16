@@ -51,15 +51,15 @@ const dbMet: MetricsHandler = new MetricsHandler('./db/metrics')
 
 // })
 
-app.delete('/metrics/:id', (req: any, res: any) => {
+// app.get('/metrics/:id', (req: any, res: any) => {
 
-  dbMet.deleteById(req.params.id, (err: Error | null, result: any) => {
-    if (err) throw err
-    console.log(result);
-    res.status(200).send(result)
-  })
+//   dbMet.deleteById(req.session.user.username, res.params.id, (err: Error | null, result: any) => {
+//     if (err) throw err
+//     console.log(result);
+//     res.status(200).send(result)
+//   })
 
-})
+// })
 
 app.get('/hello/:name', (req, res) =>
   res.render('hello.ejs', { name: req.params.name })
@@ -165,21 +165,21 @@ app.use(authRouter)
 const userRouter = express.Router()
 app.use('/user', userRouter)
 
-userRouter.post('/', (req: any, res: any, next: any) => {
-  dbUser.get(req.body.username, function (err: Error | null, result?: User) {
-    if (!err || result !== undefined) {
-      res.status(409).send("user already exists")
-    } else {
-      let user = new User(req.body.username, req.body.email, req.body.password, false);
-      dbUser.save(req.body, function (err: Error | null) {
+// userRouter.post('/', (req: any, res: any, next: any) => {
+//   dbUser.get(req.body.username, function (err: Error | null, result?: User) {
+//     if (!err || result !== undefined) {
+//       res.status(409).send("user already exists")
+//     } else {
+//       let user = new User(req.body.username, req.body.email, req.body.password, false);
+//       dbUser.save(req.body, function (err: Error | null) {
 
-        if (err) next(err)
+//         if (err) next(err)
 
-        else res.status(201).send("user persisted")
-      })
-    }
-  })
-})
+//         else res.status(201).send("user persisted")
+//       })
+//     }
+//   })
+// })
 
 userRouter.get('/:username', (req: any, res: any, next: any) => {
   dbUser.get(req.params.username, function (err: Error | null, result?: User) {
@@ -207,7 +207,7 @@ app.get('/', authCheck, (req: any, res: any) => {
 })
 
 
-app.post('/metrics/:id', authCheck, (req: any, res: any) => {
+app.post('/metrics', authCheck, (req: any, res: any) => {
   // console.log('hello', req);
   console.log('req.body', req.body);
   console.log(req.session);
@@ -218,7 +218,14 @@ app.post('/metrics/:id', authCheck, (req: any, res: any) => {
   dbMet.save(req.params.id, metricArray, (err: Error | null) => {
     // dbMet.save(req.params.id, req.body, (err: Error | null) => {
     if (err) throw err
-    res.status(200).send('OK')
+
+    dbMet.getByUsername(req.session.user.username, (err: Error | null, result: any) => {
+      if (err) throw err
+      console.log(result);
+      req.session.user.metrics = result
+      res.status(200).send(ok)
+    })
+    // res.status(200).send('OK')
   })
 })
 
@@ -231,6 +238,25 @@ app.get('/metrics', authCheck, (req: any, res: any) => {
   })
 })
 
+app.delete('/metrics/:timestamp/:value', authCheck, (req: any, res: any) => {
+  console.log('FROM SERVER', req.params.timestamp);
+  console.log('FROM SERVER', req.params.value);
+  dbMet.deleteById(req.session.user.username, req.params.timestamp, req.params.value, (err: Error | null, result: any) => {
+    if (err) throw err
+    // console.log(result);
+    // res.status(200).send(result)
+
+
+    dbMet.getByUsername(req.session.user.username, (err: Error | null, result: any) => {
+      if (err) throw err
+      console.log("After delete: ", result);
+      req.session.user.metrics = result
+      res.status(200).send(ok)
+    })
+  })
+  // res.status(200) 
+})
+
 userRouter.get('/', authCheck, (req: any, res: any, next: any) => {
   dbUser.get(req.session.user.username, function (err: Error | null, result?: User) {
     if (err || result === undefined) {
@@ -240,4 +266,11 @@ userRouter.get('/', authCheck, (req: any, res: any, next: any) => {
   })
 })
 
+
+
+
+
 // https://d3js.org/
+
+
+// https://www.youtube.com/watch?v=ohmYRtEHktI 
