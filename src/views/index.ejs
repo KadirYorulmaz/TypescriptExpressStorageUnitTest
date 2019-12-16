@@ -91,24 +91,19 @@
 
                       
                       <!-- <form method="POST" action="/metrics/edit/"> -->
-                        <div class="form-group">
+                        <div  class="form-group">
                           <label id="timestamp-to-edit">Timestamp: <span id="timestamp-span"> </span> </label>
-                          <input type="text" class="form-control" id="timestamp-to-edit-hidden">
+                          <input type="hidden" class="form-control" id="timestamp-to-edit-hidden">
                         </div>
                         <div class="form-group">
                           <label for="value-to-edit">Value</label>
                           <input type="text" class="form-control" id="value-to-edit">
                         </div>
-                        <button type="submit" class="btn btn-primary">Edit</button>
+                        <button class="btn btn-primary" onclick="editBox()">Edit</button>
                       <!-- </form> -->
                     </div>
                   </div>
-<!--                   
-                  Lav Ajax function
-                  tag fat i værdierne via submit via ID 
-                  efter Edit 
-                  Vis det på tidslinjen 
-                  Slet eksisterende input værdien -->
+                  
                 
 
 
@@ -263,13 +258,54 @@ $(".edit-metric-value-success-btn").click(function() {
 */
 
 
-    // --- send to edit Metric ---
+    // --- Edit specific Metric ---
+  //  -----------------------
+
+
+
+//efter Edit 
+//Vis det på tidslinjen 
+
+
+
+$("#card-box").hide();
+
+function editBox(){
+  data = {}
+ 
+  data.timestamp = $("#timestamp-to-edit-hidden").val();
+  data.value = $('#value-to-edit').val()
+  console.log("data", data);
+ $.ajax({
+    type: "POST", 
+    url: "/metrics",
+    data: JSON.stringify(data),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (data) {
+      console.log("Success####", data);
+      $("#card-box").hide();
+      $("#timestamp-span").text('');
+      $("#timestamp-to-edit-hidden").val('');
+      $("#value-to-edit").val('');
+    },
+    failure: function (errMsg) {
+      alert(errMsg);
+    }
+  })
+
+}
+
+
+
+
+
+    // --- send value to edit Metric ---
   //  ----------------------- 
-
-
   $("#card-box").hide();
 function editMetric(timestamp, value){
  $("#timestamp-span").text(timestamp);
+ $("#timestamp-to-edit-hidden").val(timestamp);
  $("#value-to-edit").val(value);
  $("#card-box").show();
 }

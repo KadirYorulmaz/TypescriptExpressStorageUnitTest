@@ -223,7 +223,7 @@ app.post('/metrics', authCheck, (req: any, res: any) => {
       if (err) throw err
       console.log(result);
       req.session.user.metrics = result
-      res.status(200).send(ok)
+      res.status(201).send(req.session.user.metrics)
     })
     // res.status(200).send('OK')
   })

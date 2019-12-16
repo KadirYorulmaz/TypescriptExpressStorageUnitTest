@@ -42,16 +42,12 @@ export class MetricsHandler {
     this.db = LevelDB.open(dbPath)
   }
 
-  public save(key: any, metrics: Metric[], callback: (error: Error | null) => void) {
-    console.log('key: ',key);
-    console.log('Metrics: ',metrics);
-
+  public save(key: any, metrics: Metric[], callback: (error: Error | null, result: any | null) => void) {
     metrics.forEach((m: Metric) => {
-      this.db.put(`${m.username}:${m.timestamp}`, `${m.value}`, (err: Error | null) => {
-        callback(err)
+      this.db.put(`${m.username}:${m.timestamp}`, `${m.value}`, (err: Error | null, result: any | null) => {
+        console.log("HEllo JUST PUT");
+        callback(err, ok)
        })
-    
-      console.log('m',m);
       // stream.write({ key: `metric:${key}:${m.timestamp}`, username: m.username, value: m.value })
     })
     // stream.end()
