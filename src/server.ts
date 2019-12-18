@@ -267,10 +267,51 @@ userRouter.get('/', authCheck, (req: any, res: any, next: any) => {
 })
 
 
+userRouter.post('/edit', authCheck, (req: any, res: any, next: any) =>{
+  console.log(req.body); 
+  let user = new User(req.body.username, req.body.email, req.body.password, false);
+  console.log(user);
+  dbUser.save(user, function (err: Error | null) {
+    if (err) next(err)
+    // else res.status(201).send("user persisted")
+    // else res.status(200).json(ok);
+    
+    dbUser.get(req.body.username, (err: Error | null, result?: User) => {
+      if (err) next(err)
+      if (result === undefined || !result.validatePassword(req.body.password)) {
+        res.redirect('/login')
+      } else {
+  
+        req.session.loggedIn = true
+        req.session.user = result
+  
+        dbMet.getByUsername(req.session.user.username, (err: Error | null, result: any) => {
+          if (err) throw err
+
+          req.session.user.metrics = result
+          console.log('req.session.user.metrics',req.session.user.metrics);
+          console.log('req.session.user' + req.session.user);
+          res.redirect('/')
+        })
+  
+       
+      }
+    })
+
+
+  })
+  
+})
 
 
 
 // https://d3js.org/
-
-
 // https://www.youtube.com/watch?v=ohmYRtEHktI 
+// https://www.yld.io/blog/node-js-databases-an-embedded-database-using-leveldb/
+
+
+// Why should we hire you
+// what is your perspective of evalution (where are you in 5 years)
+// what is your weakness and strenghness 
+// what is your efforts for the company community (Are you working and going home og do you contribute to have some nice time with you colleagues)
+// 

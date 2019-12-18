@@ -48,16 +48,17 @@ export class UserHandler {
 
     public get(username: string, callback: (err: Error | null, result?: User) => void) {
         this.db.get(`user:${username}`, function (err: Error, data: any) {
-            console.log('data*************', data);
             if (err) callback(err)
             else if (data === undefined) callback(null, data)
             else callback(null, User.fromDb(username, data))
         })
     }
 
-    public save(user: User, callback: (err: Error | null) => void) {
-        this.db.put(`user:${user.username}`, `${user.getPassword()}:${user.email}`, (err: Error | null) => {
-            callback(err)
+    public save(user: User, callback: (err: Error | null, result?: any) => void) {
+        this.db.put(`user:${user.username}`, `${user.getPassword()}:${user.email}`, (err: Error | null, result?: any) => {
+            // console.log(result);
+            // console.log(err);
+            callback(err, 'ok')
         })
     }
 

@@ -63,15 +63,11 @@ export class MetricsHandler {
         // callback(null, data);
         console.log('data',data);
 
-        // let username: string = data.key.split(':')[1]
-        // let metric: Metric = new Metric(username, data.timestamp, data.value);
-
+        let username: string = data.key.split(':')[0];
+        let timestamp: string = data.key.split(':')[1];
+        let metric: Metric = new Metric(username, timestamp, data.value);
+        metrics.push(metric);
         
-        // let metric: Metric = new Metric(data.key, data.value);
-        // metrics.push(Metric.fromDb(username, data))
-        // metrics.push(metric)
-        // console.log(metrics);
-        // metrics.push(data)
       })
       .on('error', function (err) {
         callback(err, null);
@@ -82,7 +78,7 @@ export class MetricsHandler {
       })
       .on('end', function () {
         // callback(null, metrics);
-        callback(null, null);
+        callback(null, metrics);
         console.log('Stream ended')
       })
   }

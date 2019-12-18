@@ -35,8 +35,8 @@
                         <div class="list-group" id="list-tab" role="tablist">
                           <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
                             href="#list-home" role="tab" aria-controls="home">User Info</a>
-                          <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
-                            href="#list-profile" role="tab" aria-controls="profile">Edit User</a>
+                          <!-- <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                            href="#list-profile" role="tab" aria-controls="profile">Edit User</a> -->
                           <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
                             href="#list-messages" role="tab" aria-controls="messages">Delete User</a>
                           <a class="list-group-item list-group-item-action" id="list-show-metrics-list" data-toggle="list"
@@ -54,18 +54,50 @@
             <!-- <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"> -->
                 <div class="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
                   <h3>User Info</h3>
-                  <div><b>Username: </b><%= username%></div>
-                  <div><b>Email: </b><%= email%></div>
+                  
+                  <div class="row">
+                    <div class="col-10">
+                        <div>
+                        <label><b>Username: </b><%= username%></label>
+                        <div><label><b>Email: </b><%= email%></label></div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <button  type="button" class="btn btn-warning edit-metric-value-edit-btn" id="edit-user-btn-show"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+              
+                  
+                  
+                  
+              <!-- // --- UserEdit Tab Begin ---
+              //  -----------------------  -->
+                  <!-- EDIT USER -->
+                  <form action="/user/edit" method="post" id="edit-user-form">
+                    <h3 class="form-signin-heading">Edit user</h3>
+                    <div class="form-group">
+                      <label for="form_username">Username</label>
+                      <input id="form_username" type="text" name="username" value="<%= username %>" />
+                    </div>
+                    <div class="form-group">
+                      <label for="form_email">Email</label>
+                      <input id="form_email" type="email" name="email" value="<%= email %>" />
+                    </div>
+                    <div class="form-group">
+                      <label for="form_password">Password</label>
+                      <input id="form_password" type="password" name="password" value="" />
+                    </div>
+                    <!-- <button class="btn btn-primary btn-block" id="connect" type="submit" value="Submit">Connect</button> -->
+                    <button class="btn btn-primary btn-block" id="connect">Edit userinfo</button>
+                  </form>
+
+
                 </div>
                    <!-- // --- End Tab ---
                     //  -----------------------  -->
          
               
-               <!-- // --- UserEdit Tab Begin ---
-              //  -----------------------  -->
-            <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-                <h3>User Edit</h3>
-              </div>
+       
                  <!-- // --- End Tab ---
                     //  -----------------------  -->
 
@@ -268,6 +300,13 @@ $(".edit-metric-value-success-btn").click(function() {
 
 
 
+$("#edit-user-form").hide();
+$("#edit-user-btn-show").click((e) =>{
+  $("#edit-user-form").show();
+  $("#edit-user-btn-show").hide();
+}) 
+
+
 $("#card-box").hide();
 
 function editBox(){
@@ -297,10 +336,7 @@ function editBox(){
 }
 
 
-
-
-
-    // --- send value to edit Metric ---
+  // --- send value to edit Metric ---
   //  ----------------------- 
   $("#card-box").hide();
 function editMetric(timestamp, value){
@@ -362,7 +398,7 @@ function editMetric(timestamp, value){
 function createChart(){
   let tempData = [];
   <% metrics.forEach(function(user){ %>
-      tempData.push({timestamp:  <%= user.timestamp%>, value:  <%= user.value%>})
+      tempData.push({timestamp: <%= user.timestamp %>, value: <%= user.value %> })
     <% }); %>
 
     console.log(tempData);
