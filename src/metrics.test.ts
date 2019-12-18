@@ -51,13 +51,14 @@ describe('Metrics', function () {
   })
 
 describe('#get', function () {
-    it('Get the user', function () {
+    it('Get the user', function (done) {
       var username = "Mads";
       dbUser.get(username, function (err: Error | null, result?: User) {
         // expect(err).to.be.null
         expect(result).to.not.be.undefined
         // expect(result).to.be.empty
         // expect(result).to.be.true
+        done()
       })
     })
   })
@@ -79,13 +80,14 @@ describe('#get', function () {
   })
 
   describe('#get', function () {
-    it('Get the user', function () {
+    it('Get the user', function (done) {
       var username = "Mad";
       dbUser.get(username, function (err: Error | null, result?: User) {
         // expect(err).to.be.null
         expect(result).to.not.be.undefined
         // expect(result).to.be.empty
         // expect(result).to.be.true
+        done()
       })
     })
   })
