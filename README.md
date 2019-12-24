@@ -54,9 +54,9 @@ link ?
 
 ## IF PROJECT DOES NOT WORK AFTER GIT CLONE
 Please delete the following 
-node_modules
-db
-dist
+- node_modules
+- db
+- dist
 
 and afterwards you need to run the following commands
 ```bash
