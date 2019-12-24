@@ -6,11 +6,11 @@ import { ok } from 'assert';
 
 export class Metric {
   public username: string
-  public timestamp: string
+  public timestamp: any
   public value: number
 
 
-  constructor(u: string, ts: string, v: number, ) {
+  constructor(u: string, ts: any, v: number, ) {
     this.username = u
     this.timestamp = ts
     this.value = v
@@ -42,7 +42,7 @@ export class MetricsHandler {
     this.db = LevelDB.open(dbPath)
   }
 
-  public save(key: any, metrics: Metric[], callback: (error: Error | null, result: any | null) => void) {
+  public save(metrics: Metric[], callback: (error: Error | null, result: any | null) => void) {
     metrics.forEach((m: Metric) => {
       this.db.put(`${m.username}:${m.timestamp}`, `${m.value}`, (err: Error | null, result: any | null) => {
         console.log("HEllo JUST PUT");
@@ -111,10 +111,10 @@ export class MetricsHandler {
   }
 
 
-  public deleteById(username: number, timestamp: any, value: any, callback: (error: Error | null, result: any | null) => void) {
+  public deleteById(username: any, timestamp: any, value: any, callback: (error: Error | null, result: any | null) => void) {
      
     this.db.del(username+':'+timestamp, (err: Error | null) => {
-        callback(err, ok)
+        callback(err, 'ok')
       });
 
   }

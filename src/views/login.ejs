@@ -19,6 +19,12 @@
         <label for="form_password">Password</label>
         <input id="form_password" type="password" name="password" />
       </div>
+      <% var emptyfields %>
+      <% if(emptyfields != "") { %>
+      <div class="alert alert-danger" role="alert">
+         <%= emptyfields %> 
+      </div>
+      <% } %>
       <!-- <button class="btn btn-primary btn-block" id="connect" type="submit" value="Submit">Connect</button> -->
       <button class="btn btn-primary btn-block" id="connect">Connect</button>
     </form>
@@ -27,6 +33,8 @@
       Create an account
     </button>
   </div>
+ 
+
 
 </body>
 

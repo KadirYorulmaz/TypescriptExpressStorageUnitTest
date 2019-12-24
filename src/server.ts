@@ -104,7 +104,8 @@ const dbUser: UserHandler = new UserHandler('./db/users')
 const authRouter = express.Router()
 
 authRouter.get('/login', (req: any, res: any) => {
-  res.render('login')
+  // res.render('login')
+  res.render('login', {emptyfields: ""})
 })
 
 authRouter.get('/signup', (req: any, res: any) => {
@@ -120,8 +121,9 @@ authRouter.get('/logout', (req: any, res: any) => {
 
 app.post('/login', (req: any, res: any, next: any) => {
   dbUser.get(req.body.username, (err: Error | null, result?: User) => {
-    if (err) next(err)
-    if (result === undefined || !result.validatePassword(req.body.password)) {
+    // if (err) next(err)
+    if (err) res.render('login', {emptyfields: "The input fields is empty"})
+    else if (result === undefined || !result.validatePassword(req.body.password)) {
       res.redirect('/login')
     } else {
 
@@ -208,32 +210,31 @@ app.get('/', authCheck, (req: any, res: any) => {
 
 
 app.post('/metrics', authCheck, (req: any, res: any) => {
-  // console.log('hello', req);
-  console.log('req.body', req.body);
-  console.log(req.session);
-  console.log('req.session.user.username', req.session.user.username);
-  let metric = new Metric(req.session.user.username, req.body.timestamp, req.body.value);
+  let timestamp = +new Date(req.body.timestamp);
+  let toStringTimestamp = timestamp.toString();
+  let metric = new Metric(req.session.user.username, toStringTimestamp, req.body.value);
   let metricArray = [] as any;
   metricArray.push(metric)
-  dbMet.save(req.params.id, metricArray, (err: Error | null) => {
-    // dbMet.save(req.params.id, req.body, (err: Error | null) => {
+  dbMet.save(metricArray, (err: Error | null) => {
     if (err) throw err
 
     dbMet.getByUsername(req.session.user.username, (err: Error | null, result: any) => {
       if (err) throw err
       console.log(result);
       req.session.user.metrics = result
-      res.status(201).send(req.session.user.metrics)
+
+      res.render('index', {
+        username: req.session.user.username,
+        email: req.session.user.email,
+        metrics : req.session.user.metrics 
+      })
     })
-    // res.status(200).send('OK')
   })
 })
 
 app.get('/metrics', authCheck, (req: any, res: any) => {
-  // console.log('hello', req);
   dbMet.getByUsername(req.session.user.username, (err: Error | null, result: any) => {
     if (err) throw err
-    // console.log(result);
     res.status(200).send(result)
   })
 })
@@ -243,10 +244,6 @@ app.delete('/metrics/:timestamp/:value', authCheck, (req: any, res: any) => {
   console.log('FROM SERVER', req.params.value);
   dbMet.deleteById(req.session.user.username, req.params.timestamp, req.params.value, (err: Error | null, result: any) => {
     if (err) throw err
-    // console.log(result);
-    // res.status(200).send(result)
-
-
     dbMet.getByUsername(req.session.user.username, (err: Error | null, result: any) => {
       if (err) throw err
       console.log("After delete: ", result);
@@ -291,7 +288,12 @@ userRouter.post('/edit', authCheck, (req: any, res: any, next: any) =>{
           req.session.user.metrics = result
           console.log('req.session.user.metrics',req.session.user.metrics);
           console.log('req.session.user' + req.session.user);
-          res.redirect('/')
+          // res.redirect('/')
+          res.render('index', {
+            username: req.session.user.username,
+            email: req.session.user.email,
+            metrics : req.session.user.metrics 
+          })
         })
   
        

@@ -62,8 +62,11 @@ export class UserHandler {
         })
     }
 
-    public delete(username: string, callback: (err: Error | null) => void) {
-        // TODO
+    public delete(username: string, callback: (err: Error | null, result?: any) => void) {
+        this.db.del(`user:${username}`, (err: Error | null) => {
+            callback(err, 'User ' + username +' deleted')
+          });
+    
     }
 
 

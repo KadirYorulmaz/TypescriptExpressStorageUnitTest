@@ -12,9 +12,13 @@
       height: 300px;
     }
   </style>
-
+<% var metrics %>
+<%= metrics %>
 
   <h1>Hello <%= username %> welcome to your page</h1>
+
+
+
 
   <div class="row">
     <div class="col-10"></div>
@@ -39,8 +43,6 @@
                             href="#list-profile" role="tab" aria-controls="profile">Edit User</a> -->
                           <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
                             href="#list-messages" role="tab" aria-controls="messages">Delete User</a>
-                          <a class="list-group-item list-group-item-action" id="list-show-metrics-list" data-toggle="list"
-                            href="#list-show-metrics" role="tab" aria-controls="ShowMetrics">Show Metrics</a>
                           <a class="list-group-item list-group-item-action" id="list-create-metrics-list" data-toggle="list"
                             href="#list-create-metrics" role="tab" aria-controls="CreateMetrics">Create Metrics</a>
                         </div>
@@ -52,7 +54,7 @@
              <!-- // --- UserInfo Tab Begin ---
               //  -----------------------  -->
             <!-- <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"> -->
-                <div class="tab-pane fade" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
                   <h3>User Info</h3>
                   
                   <div class="row">
@@ -108,90 +110,6 @@
               </div>
    <!-- // --- End Tab ---
                     //  -----------------------  -->
-
-
-               <!-- // --- Metric show Tab Begin ---
-              //  -----------------------  -->
-                <div class="tab-pane fade" id="list-show-metrics" role="tabpanel" aria-labelledby="list-show-metrics-list">
-                  <h3>Show My metrics</h3>
-
-                  <div id="card-box" class="card">
-                    <div class="card-header">
-                      Edit metrics value 
-                    </div>
-                    <div class="card-body">
-
-                      
-                      <!-- <form method="POST" action="/metrics/edit/"> -->
-                        <div  class="form-group">
-                          <label id="timestamp-to-edit">Timestamp: <span id="timestamp-span"> </span> </label>
-                          <input type="hidden" class="form-control" id="timestamp-to-edit-hidden">
-                        </div>
-                        <div class="form-group">
-                          <label for="value-to-edit">Value</label>
-                          <input type="text" class="form-control" id="value-to-edit">
-                        </div>
-                        <button class="btn btn-primary" onclick="editBox()">Edit</button>
-                      <!-- </form> -->
-                    </div>
-                  </div>
-                  
-                
-
-
-
-
-
-
-                  <table class="table" id="my-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Timestamp</th>
-                        <th scope="col">Value</th>
-                        <th scope="col">Remove</th>
-                        <th scope="col">Edit</th>
-                      </tr>
-                    <tbody>
-
-                      <% metrics.forEach(function(user){ %>
-                      <tr>
-                        <!-- <form method="delete" action="/metrics/delete/<%= user.timestamp%>"> -->
-                            <th scope="row"></th>  </th>
-                            <td> <%= user.timestamp%> </td>
-                            <td>  <span class="value-text"><%= user.value%></span> </td>
-                            <td>
-                              <!-- <input  value="<%= user.timestamp%>"> -->
-                              <!-- <input type="" id="form_timestamp" type="number" name="timestamp" /> -->
-                              <!-- <a href="/metrics/<%= user.timestamp%>"><i class="fa fa-trash-o" aria-hidden="true"></i></a> -->
-                                <button  type="button" class="btn btn-danger" id="delete-metric-value" onclick="deleteMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                            </td>
-                            <td>
-                              <!-- <button  type="button" class="btn btn-warning" class="edit-metric-value-edit-btn" onclick="editMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-edit" aria-hidden="true"></i></button> -->
-                              <button  type="button" class="btn btn-warning edit-metric-value-edit-btn" onclick="editMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                              <!-- <button type="button" class="btn btn-success edit-metric-value-success-btn"> Success</button> -->
-                            </td> 
-                        <!-- </form> -->
-                      </tr>
-                      <% }); %>
-                    </tbody>
-                  </table>
-                 
-                
-                    <button class="btn btn-success" id="show-metrics">
-                      Bring the metrics
-                    </button>
-
-
-
-                    <div id="chartdiv"></div>
-                </div>
-          <!-- // --- End Tab ---
-                    //  -----------------------  -->
-
-
-
                      <!-- // --- CreateMetrics Tab Begin ---
                     //  -----------------------  -->
                     <div class="tab-pane fade" id="list-create-metrics" role="tabpanel" aria-labelledby="list-create-metrics-list">
@@ -199,15 +117,30 @@
 
                       <div class="col-md-6 col-md-offset-3">
 
+                        <form action="/metrics" method="POST">
+                          <div class="row">
+                            <div class="col">
+                              <input type="date" class="form-control" id="date-value" aria-describedby="dateHelp" name="timestamp">
+                              <small id="dateHelp" class="form-text text-muted">Manually choose a date please</small>
+                            </div>
+                            <div class="col">
+                              <input type="number" min="0" class="form-control" id="metric-value" aria-describedby="valueHelp" name="value">
+                              <small id="dateHelp" class="form-text text-muted">Chooe a random value</small>
+                            </div>
+                          </div>
+                          <button class="btn btn-success" id="create-metrics" type="submit" value="Submit">Create metrics</button>
+                        </form>
+                        <%= metrics %>
+
+                        
+                        <!-- 
                         <input type='date' id='date-value'>
-                        <input type='number' id='metric-value'>
-                        <button onClick='checkDateValue()'> Submit </button>
+                        <input type='number' id='metric-value'> -->
+                        <!-- <button onClick='checkDateValue()'> Submit </button> -->
 
-                        <div>Timestamp:- <span id='date-value-timestamp'></span></div>
+                        <!-- <div>Timestamp:- <span id='date-value-timestamp'></span></div> -->
 
-                        <button class="btn btn-success" id="create-metrics">
-                          Bring the metrics
-                        </button>
+                        
 
                         <div id="metrics"></div>
                       </div>
@@ -220,12 +153,91 @@
     </div>
 
   </div>
-  
+
+
+
+
+ 
+
+
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+      <h3>List of metrics</h3>
+    </div>
   </div>
 
 
 
+  <div id="chartdiv"></div>  
   
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-12">
+
+      
+
+      
+      <table class="table" id="my-table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Timestamp</th>
+            <th scope="col">Value</th>
+            <th scope="col">Remove</th>
+            <th scope="col">Edit</th>
+          </tr>
+        <tbody>
+          <tr>
+            <div id="card-box" class="card">
+              <div class="card-header">
+                Edit metrics value 
+              </div>
+              <div class="card-body">
+      
+                
+                <!-- <form method="POST" action="/metrics/edit/"> -->
+                  <div  class="form-group">
+                    <label id="timestamp-to-edit">Timestamp: <span id="timestamp-span"> </span> </label>
+                    <input type="hidden" class="form-control" id="timestamp-to-edit-hidden">
+                  </div>
+                  <div class="form-group">
+                    <label for="value-to-edit">Value</label>
+                    <input type="text" class="form-control" id="value-to-edit">
+                  </div>
+                  <button class="btn btn-primary" onclick="editBox()">Edit</button>
+                <!-- </form> -->
+              </div>
+            </div>
+          </tr>
+          <% metrics.forEach(function(user){ %>
+          <tr>
+            <!-- <form method="delete" action="/metrics/delete/<%= user.timestamp%>"> -->
+                <th scope="row"></th>  </th>
+                <td> <%= user.timestamp%> </td>
+                <td>  <span class="value-text"><%= user.value%></span> </td>
+                <td>
+                  <!-- <input  value="<%= user.timestamp%>"> -->
+                  <!-- <input type="" id="form_timestamp" type="number" name="timestamp" /> -->
+                  <!-- <a href="/metrics/<%= user.timestamp%>"><i class="fa fa-trash-o" aria-hidden="true"></i></a> -->
+                    <button  type="button" class="btn btn-danger" id="delete-metric-value" onclick="deleteMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                </td>
+                <td>
+                  <!-- <button  type="button" class="btn btn-warning" class="edit-metric-value-edit-btn" onclick="editMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-edit" aria-hidden="true"></i></button> -->
+                  <button  type="button" class="btn btn-warning edit-metric-value-edit-btn" onclick="editMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                  <!-- <button type="button" class="btn btn-success edit-metric-value-success-btn"> Success</button> -->
+                </td> 
+            <!-- </form> -->
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+   
+      
 
 
   <div id="chartContainer" style="height: 300px; width: 100%;"></div>
@@ -243,6 +255,7 @@
 <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
 
 <script>
+
   /*  $('#show-metrics').click((e) => {
         e.preventDefault();
         $.getJSON("/metrics.json", {}, (data) => {
@@ -428,8 +441,8 @@ function createChart(){
 
   // --- Creates new metric ---
   // --------------------------   
-  $('#create-metrics').click((e) => {
-    console.log("Hello");
+  /*$('#create-metrics').click((e) => {
+    console.log("Hello create");
     let data = {};
     console.log((+new Date(document.getElementById('date-value').value)));
     data.timestamp = (+new Date(document.getElementById('date-value').value));
@@ -443,14 +456,18 @@ function createChart(){
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: function (data) {
+        console.log("VALUE###");
         console.log(data);
-
+        console.log("VALUE###");
+        $('#metric-value').val("");
+        $('#date-value').val("");
+        ejs.render('<$= metrics.join(" | "); $>', { metrics: data});
       },
       failure: function (errMsg) {
         alert(errMsg);
       }
     })
-  })
+  })*/
 
 </script>
 
