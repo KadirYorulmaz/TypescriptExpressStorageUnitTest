@@ -35,7 +35,6 @@ export class MetricsHandler {
   public save(metrics: Metric[], callback: (error: Error | null, result: any | null) => void) {
     metrics.forEach((m: Metric) => {
       this.db.put(`${m.username}:${m.timestamp}`, `${m.value}`, (err: Error | null, result: any | null) => {
-        console.log("HEllo JUST PUT");
         callback(err, ok)
       })
     })
@@ -52,6 +51,7 @@ export class MetricsHandler {
         let timestamp: string = data.key.split(':')[1];
         let metric: Metric = new Metric(username, timestamp, data.value);
         metrics.push(metric);
+        console.log(metrics);
       })
       .on('error', function (err) {
         callback(err, null);
@@ -78,6 +78,7 @@ export class MetricsHandler {
           let timestamp: string = data.key.split(':')[1];
           let metric: Metric = new Metric(username, timestamp, data.value);
           metrics.push(metric)
+          console.log(metrics);
         }
       })
       .on('error', function (err) {
