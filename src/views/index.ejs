@@ -13,7 +13,7 @@
     }
   </style>
 <% var metrics %>
-<%= metrics %>
+<!-- <%= metrics %> -->
 
   <h1>Hello <%= username %> welcome to your page</h1>
 
@@ -107,6 +107,12 @@
               //  -----------------------  -->
               <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
                 <h3>Delete User</h3>
+
+                <h4>This button will delete the user, are you sure you want to delete ? </h4>
+                <form class="spacer" action="user/delete" method="post">
+                  <input class="btn btn-danger"  class="submit" type="submit" value="Submit" />
+                  </form>
+
               </div>
    <!-- // --- End Tab ---
                     //  -----------------------  -->
@@ -130,7 +136,7 @@
                           </div>
                           <button class="btn btn-success" id="create-metrics" type="submit" value="Submit">Create metrics</button>
                         </form>
-                        <%= metrics %>
+                        <!-- <%= metrics %> -->
 
                         
                         <!-- 
@@ -158,7 +164,9 @@
 
 
  
-
+<br/>
+<br/>
+<br/>
 
 
   <div class="row justify-content-md-center">
@@ -196,39 +204,31 @@
               <div class="card-body">
       
                 
-                <!-- <form method="POST" action="/metrics/edit/"> -->
+                <form method="POST" action="/metrics">
                   <div  class="form-group">
                     <label id="timestamp-to-edit">Timestamp: <span id="timestamp-span"> </span> </label>
-                    <input type="hidden" class="form-control" id="timestamp-to-edit-hidden">
+                    <input type="hidden" class="form-control" id="timestamp-to-edit-hidden" name="timestamp">
                   </div>
                   <div class="form-group">
                     <label for="value-to-edit">Value</label>
-                    <input type="text" class="form-control" id="value-to-edit">
+                    <input type="text" class="form-control" id="value-to-edit" name="value">
                   </div>
-                  <button class="btn btn-primary" onclick="editBox()">Edit</button>
-                <!-- </form> -->
+                  <button class="btn btn-primary"  type="submit" value="Submit">Edit</button>
+                </form>
               </div>
             </div>
           </tr>
           <% metrics.forEach(function(user){ %>
           <tr>
-            <!-- <form method="delete" action="/metrics/delete/<%= user.timestamp%>"> -->
-                <th scope="row"></th>  </th>
+             <th scope="row"></th>  </th>
                 <td> <%= user.timestamp%> </td>
                 <td>  <span class="value-text"><%= user.value%></span> </td>
                 <td>
-                  <!-- <input  value="<%= user.timestamp%>"> -->
-                  <!-- <input type="" id="form_timestamp" type="number" name="timestamp" /> -->
-                  <!-- <a href="/metrics/<%= user.timestamp%>"><i class="fa fa-trash-o" aria-hidden="true"></i></a> -->
                     <button  type="button" class="btn btn-danger" id="delete-metric-value" onclick="deleteMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                 </td>
                 <td>
-                  <!-- <button  type="button" class="btn btn-warning" class="edit-metric-value-edit-btn" onclick="editMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-edit" aria-hidden="true"></i></button> -->
                   <button  type="button" class="btn btn-warning edit-metric-value-edit-btn" onclick="editMetric(<%= user.timestamp %>, <%= user.value %>)"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                  <!-- <button type="button" class="btn btn-success edit-metric-value-success-btn"> Success</button> -->
                 </td> 
-            <!-- </form> -->
           </tr>
           <% }); %>
         </tbody>
@@ -256,63 +256,6 @@
 
 <script>
 
-  /*  $('#show-metrics').click((e) => {
-        e.preventDefault();
-        $.getJSON("/metrics.json", {}, (data) => {
-            const content = data.map(d => {
-                return 'timestamp: ' + d.timestamp + ', value: ' + d.value + '';
-            })
-            $('#metrics').append(content.join("\n"));
-        });
-    })   */
-
-  /*  $('#show-metrics').click((e) => {
-      e.preventDefault();
-      $.getJSON("user/kad", {}, (data) => {
-          console.log(data.username);
-          console.log(data);
-          $('username').val(data.username);
-          $('email').val(data.email); 
-          $('password').val(data.password);
-      });
-  }) */
-
-  // $(".edit-metric-value-success-btn").hide();
-    //$(".value-input").hide();
-
- /* $(".edit-metric-value-edit-btn").click(function(){
-    $(".edit-metric-value-success-btn").show();
-    $(".value-input").show();
-    $(".value-text").hide();
-  });
-*/
-  
- /* $(".edit-metric-value-edit-btn").click(function() {
-    console.log("Hello");
-    $(this).hide()   
-    $(this).siblings(".edit-metric-value-success-btn").show();
-});
-  
-
-$(".edit-metric-value-success-btn").click(function() {
-  console.log("Hello");
-  $(this).hide()   
-  $(this).siblings(".edit-metric-value-edit-btn").show();
-});
-  
-*/
-
-
-    // --- Edit specific Metric ---
-  //  -----------------------
-
-
-
-//efter Edit 
-//Vis det på tidslinjen 
-
-
-
 $("#edit-user-form").hide();
 $("#edit-user-btn-show").click((e) =>{
   $("#edit-user-form").show();
@@ -320,7 +263,7 @@ $("#edit-user-btn-show").click((e) =>{
 }) 
 
 
-$("#card-box").hide();
+/*$("#card-box").hide();
 
 function editBox(){
   data = {}
@@ -346,7 +289,7 @@ function editBox(){
     }
   })
 
-}
+}*/
 
 
   // --- send value to edit Metric ---
@@ -361,13 +304,6 @@ function editMetric(timestamp, value){
 
 
 
-
-
-
-
-
-
-
     // --- Delete Metric ---
   //  ----------------------- 
   function deleteMetric(timestamp, value){
@@ -378,7 +314,7 @@ function editMetric(timestamp, value){
       url: "/metrics/"+timestamp+"/"+value,
       success: function (data) {
         console.log(data);
-
+        window.location.reload();
       },
       failure: function (errMsg) {
         alert(errMsg);

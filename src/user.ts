@@ -3,7 +3,6 @@ import WriteStream from 'level-ws'
 import { ok } from "assert"
 var passwordHash = require('password-hash');
 
-
 export class User {
     public username: string
     public email: string
@@ -45,7 +44,6 @@ export class User {
 
 export class UserHandler {
     public db: any
-
     public get(username: string, callback: (err: Error | null, result?: User) => void) {
         this.db.get(`user:${username}`, function (err: Error, data: any) {
             if (err) callback(err)
@@ -56,8 +54,6 @@ export class UserHandler {
 
     public save(user: User, callback: (err: Error | null, result?: any) => void) {
         this.db.put(`user:${user.username}`, `${user.getPassword()}:${user.email}`, (err: Error | null, result?: any) => {
-            // console.log(result);
-            // console.log(err);
             callback(err, 'ok')
         })
     }
@@ -66,7 +62,6 @@ export class UserHandler {
         this.db.del(`user:${username}`, (err: Error | null) => {
             callback(err, 'User ' + username +' deleted')
           });
-    
     }
 
 
@@ -91,9 +86,6 @@ export class UserHandler {
           })
       }
     
-
-
-
     constructor(path: string) {
         this.db = LevelDB.open(path)
     }

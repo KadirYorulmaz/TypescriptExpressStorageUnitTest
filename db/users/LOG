@@ -1,3 +1,5 @@
-2019/12/24-10:53:13.409 319c Recovering log #552
-2019/12/24-10:53:13.413 319c Delete type=0 #552
-2019/12/24-10:53:13.413 319c Delete type=3 #551
+2019/12/24-19:33:58.107 2ccc Recovering log #28
+2019/12/24-19:33:58.107 2ccc Level-0 table #31: started
+2019/12/24-19:33:58.114 2ccc Level-0 table #31: 344 bytes OK
+2019/12/24-19:33:58.117 2ccc Delete type=0 #28
+2019/12/24-19:33:58.117 2ccc Delete type=3 #26

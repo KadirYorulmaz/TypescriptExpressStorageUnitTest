@@ -32,3 +32,9 @@ update / delete a metric
 Functional unit tests  
 
 Create default users in forhand
+
+
+
+Added two user
+
+travis added 

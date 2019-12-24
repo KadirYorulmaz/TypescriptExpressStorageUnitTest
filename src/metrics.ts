@@ -14,7 +14,7 @@ export class Metric {
     this.username = u
     this.timestamp = ts
     this.value = v
-   
+
   }
 
   static fromDb(username: string, values: any): Metric {
@@ -22,18 +22,8 @@ export class Metric {
     const [timestamp, value] = values.split(":")
     console.log([username, value]);
     return new Metric(username, timestamp, value)
+  }
 }
-}
-
-//   export class MetricsHandler {
-//     static get(callback: (error: Error | null, result?: Metric[]) => void) {
-//       const result = [
-//         new Metric('2013-11-04 14:00 UTC', 12),
-//         new Metric('2013-11-04 14:30 UTC', 15)
-//       ]
-//       callback(null, result)
-//     }
-//   }
 
 export class MetricsHandler {
   public db: any
@@ -47,10 +37,8 @@ export class MetricsHandler {
       this.db.put(`${m.username}:${m.timestamp}`, `${m.value}`, (err: Error | null, result: any | null) => {
         console.log("HEllo JUST PUT");
         callback(err, ok)
-       })
-      // stream.write({ key: `metric:${key}:${m.timestamp}`, username: m.username, value: m.value })
+      })
     })
-    // stream.end()
   }
 
 
@@ -59,15 +47,11 @@ export class MetricsHandler {
 
     this.db.createReadStream()
       .on('data', function (data) {
-        // console.log(data.key, '=', data.value)
-        // callback(null, data);
-        console.log('data',data);
-
+        console.log('data', data);
         let username: string = data.key.split(':')[0];
         let timestamp: string = data.key.split(':')[1];
         let metric: Metric = new Metric(username, timestamp, data.value);
         metrics.push(metric);
-        
       })
       .on('error', function (err) {
         callback(err, null);
@@ -94,9 +78,8 @@ export class MetricsHandler {
           let timestamp: string = data.key.split(':')[1];
           let metric: Metric = new Metric(username, timestamp, data.value);
           metrics.push(metric)
-
-          }
-      })  
+        }
+      })
       .on('error', function (err) {
         callback(err, null);
         console.log('Oh my!', err)
@@ -110,13 +93,9 @@ export class MetricsHandler {
       })
   }
 
-
   public deleteById(username: any, timestamp: any, value: any, callback: (error: Error | null, result: any | null) => void) {
-     
-    this.db.del(username+':'+timestamp, (err: Error | null) => {
-        callback(err, 'ok')
-      });
-
+    this.db.del(username + ':' + timestamp, (err: Error | null) => {
+      callback(err, 'ok')
+    });
   }
-
 }
