@@ -23,14 +23,18 @@ Writing the below will watch your servers
 ```bash
 npm run dev
 ```
+Writting the below will start the test
+```bash
+npm test
+```
 
 The server will then run on port 8080
 Paste below link to the browser will give you the ability to acces the website
-[http://localhost:8080/login]
+http://localhost:8080/login
 
 
 
-# preadded users and metrics 
+## preadded users and metrics 
 THere are to preadded users
 
 
@@ -40,27 +44,28 @@ THere are to preadded users
 | 2      | gregor        | gregor       |
 
 
+## Travis
+We have added contineous integration (CI) by travis.
+And fortunately all our tests passed. 
+
+Here is the url for travis 
+link ?
+
+
+## IF PROJECT DOES NOT WORK AFTER GIT CLONE
+Please delete the following 
+node_modules
+db
+dist
+
+and afterwards you need to run the following commands
+```bash
+npm install
+```
+
+```bash
+npm start
+```
+
+
 # Made by Abdul Kadir Yorulmaz & Adit Gupta
-
-
-signup 
--when signup redirect to login
-
-login
-- when login redirect to index
-
-signout
-
- 
-display metrics in a graph
-update / delete a metric             
-
-Functional unit tests  
-
-Create default users in forhand
-
-
-
-Added two user
-
-travis added 
