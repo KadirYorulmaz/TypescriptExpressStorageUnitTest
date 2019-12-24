@@ -80,8 +80,9 @@ npm start
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
-# Made by Abdul Kadir Yorulmaz & Adit Gupta
 
 ## TRAVIS SCREENSHOT
 ![travis1](https://user-images.githubusercontent.com/12858462/71426743-b3260600-26ae-11ea-9c89-5a26a4b5b5f8.PNG)
 ![travis2](https://user-images.githubusercontent.com/12858462/71426744-b8835080-26ae-11ea-81dc-001d1b44f850.PNG)
+
+# Made by Abdul Kadir Yorulmaz & Adit Gupta
