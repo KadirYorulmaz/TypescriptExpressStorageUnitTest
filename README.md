@@ -34,10 +34,10 @@ Paste below link to the browser will give you the ability to acces the website
 THere are to preadded users
 
 
-| Tables        | username      | password     |
-| ------------- |:-------------:| ------------:|
-| user          | sergei        | sergei       |
-| user          | gregor        | gregor       |
+| Tables | username      | password     |
+| -------|:-------------:| ------------:|
+| 1      | sergei        | sergei       |
+| 2      | gregor        | gregor       |
 
 
 # Made by Abdul Kadir Yorulmaz & Adit Gupta
