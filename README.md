@@ -33,13 +33,11 @@ Paste below link to the browser will give you the ability to acces the website
 # preadded users and metrics 
 THere are to preadded users
 
-user 1
-Username: sergei
-password: sergei
 
-user 2
-Username: gregor
-password: gregor
+| Tables        | username      | password     |
+| ------------- |:-------------:| ------------:|
+| user          | sergei        | sergei       |
+| user          | gregor        | gregor       |
 
 
 # Made by Abdul Kadir Yorulmaz & Adit Gupta
