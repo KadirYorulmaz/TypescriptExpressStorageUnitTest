@@ -77,5 +77,7 @@ npm install
 npm start
 ```
 
+#LICENSE
+License: MIT
 
 # Made by Abdul Kadir Yorulmaz & Adit Gupta
