@@ -1,18 +1,46 @@
-# Nodejs Typescript Lab 2
+# Webdevelopment - Devops project
  
-# Introduction 
-This project is about nodejs Api made with Typescript and Express.
-This project is using a frontend called ejs pages. 
+## Introduction 
+This project is about basic CRUD functionalities
+CRUD functionalities for a User 
+CRUD functionalities for a Metrics which consist of timestamp and value
+<!-- This project is about nodejs Api made with Typescript and Express.
+This project is using a frontend called ejs pages.  -->
 
-# How to run the project
+
+## Installation
+downloads the packages that are in package.json and creates the folder node_modules
+```bash
+npm install
+```
+
+## Usage
 Writing the below will start your server  
-- npm start
+```bash
+npm start
+```
+Writing the below will watch your servers
+```bash
+npm run dev
+```
 
-The server is running on port 8080
-
+The server will then run on port 8080
 Paste below link to the browser will give you the ability to acces the website
+[http://localhost:8080/login]
 
-http://localhost:8080/hello/:kadir
+
+
+# preadded users and metrics 
+THere are to preadded users
+
+user 1
+Username: sergei
+password: sergei
+
+user 2
+Username: gregor
+password: gregor
+
 
 # Made by Abdul Kadir Yorulmaz & Adit Gupta
 

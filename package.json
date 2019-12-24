@@ -6,7 +6,7 @@
   "scripts": {
     "build": "./node_modules/.bin/tsc -p tsconfig.json",
     "start": "./node_modules/.bin/ts-node src/server.ts",
-    "dev": "nodemon --exec \"ts-node\" --cache-directory .tscache ./server.ts",
+    "dev": "nodemon --exec ./node_modules/.bin/ts-node src/server.ts",
     "test": "./node_modules/.bin/mocha -r ts-node/register src/**/*.test.ts"
   },
   "author": "",
