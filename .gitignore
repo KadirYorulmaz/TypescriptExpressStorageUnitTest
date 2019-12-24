@@ -1,5 +1,3 @@
-db/testuser
-db/testmetrics
 # Logs
 logs
 *.log
