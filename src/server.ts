@@ -53,7 +53,7 @@ let user1 = new User('sergei', 'sergei@h.dk', 'sergei', false);
 dbUser.save(user1, (err: Error | null, result?: any) => {
   console.log(result);
 })
-// TODO : DATE SKAL VÆRE TIMESTAMP
+
 let user1Metric1 = new Metric(user1.username, '1577232000000', 1);
 let user1Metric2 = new Metric(user1.username, '1577318400000', 2);
 let user1Metric3 = new Metric(user1.username, '1577404800000', 3);
@@ -80,7 +80,7 @@ let user2 = new User('gregor', 'gregor@h.dk', 'gregor', false);
 dbUser.save(user2, (err: Error | null, result?: any) => {
   console.log(result);
 })
-// TODO : DATE SKAL VÆRE TIMESTAMP
+
 let user2Metric1 = new Metric(user2.username, '1577232000000', 1);
 let user2Metric2 = new Metric(user2.username, '1577318400000', 2);
 let user2Metric3 = new Metric(user2.username, '1577404800000', 3);
@@ -96,12 +96,10 @@ metricsUser2.push(user2Metric3);
 metricsUser2.push(user2Metric4);
 metricsUser2.push(user2Metric5);
 
+
 dbMet.save(metricsUser2, (error: Error | null, result: any) => {
   console.log(result);
 })
-
-
-
 
 authRouter.get('/login', (req: any, res: any) => {
   res.render('login', { emptyfields: "" })
@@ -154,7 +152,6 @@ app.post('/signup', (req: any, res: any, next: any) => {
   })
 })
 
-
 app.use(authRouter)
 
 const userRouter = express.Router()
@@ -183,7 +180,6 @@ app.get('/', authCheck, (req: any, res: any) => {
     metrics: req.session.user.metrics
   })
 })
-
 
 app.post('/metrics', authCheck, (req: any, res: any) => {
   let toStringTimestamp;

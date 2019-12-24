@@ -1,30 +1,31 @@
 <html>
+
 <head>
-    <% include partials/head %>
+  <% include partials/head %>
 </head>
+
 <body class="container">
-    <div class="container">
-         <form action="/signup" method="post">
-          <h2 class="form-signin-heading">Please signup</h2>
-          <div class="form-group">
-            <label for="form_username">Username</label>
-            <input id="form_username" type="text" name="username" />
-          </div>
-          <div class="form-group">
-            <label for="form_email">Email</label>
-            <input id="form_email" type="email" name="email" />
-          </div>
-          <div class="form-group">
-            <label for="form_password">Password</label>
-            <input id="form_password" type="password" name="password" />
-          </div>
-          <!-- <button class="btn btn-primary btn-block" id="connect" type="submit" value="Submit">Connect</button> -->
-          <button class="btn btn-primary btn-block" id="connect">Connect</button>
-        </form>
-        <hr/>
-       </div>
+  <div class="container">
+    <form action="/signup" method="post">
+      <h2 class="form-signin-heading">Please signup</h2>
+      <div class="form-group">
+        <label for="form_username">Username</label>
+        <input id="form_username" type="text" name="username" />
+      </div>
+      <div class="form-group">
+        <label for="form_email">Email</label>
+        <input id="form_email" type="email" name="email" />
+      </div>
+      <div class="form-group">
+        <label for="form_password">Password</label>
+        <input id="form_password" type="password" name="password" />
+      </div>
+      <button class="btn btn-primary btn-block" id="connect">Connect</button>
+    </form>
+    <hr />
+  </div>
 </body>
+
 </html>
-  
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-   
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
