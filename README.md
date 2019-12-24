@@ -35,7 +35,7 @@ http://localhost:8080/login
 
 
 ## preadded users and metrics 
-THere are to preadded users
+There are two preadded users
 
 
 | Tables | username      | password     |
