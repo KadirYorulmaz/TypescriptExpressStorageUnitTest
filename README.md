@@ -4,8 +4,15 @@
 This project is about basic CRUD functionalities
 CRUD functionalities for a User 
 CRUD functionalities for a Metrics which consist of timestamp and value
-<!-- This project is about nodejs Api made with Typescript and Express.
-This project is using a frontend called ejs pages.  -->
+
+The project is for help to other new beginners.
+The project is using technologies like 
+- NodeJs
+- Typescript
+- EJS
+- JQuery (Ajax)
+- LevelDB
+- Express
 
 
 ## Installation
@@ -47,9 +54,12 @@ There are two preadded users
 ## Travis
 We have added contineous integration (CI) by travis.
 And fortunately all our tests passed. 
+The tests consist of 
+- User (CRUD) 
+- Metrics (CRUD) 
 
 Here is the url for travis 
-link ?
+https://travis-ci.org/KadirYorulmaz/TypescriptExpressStorageUnitTest
 
 
 ## IF PROJECT DOES NOT WORK AFTER GIT CLONE
